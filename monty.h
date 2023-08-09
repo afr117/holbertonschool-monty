@@ -7,7 +7,7 @@
 #define STACK_MAX_SIZE 1024
 
 extern int data_stack[STACK_MAX_SIZE];
-extern int stack_size;
+extern size_t stack_size;
 
 void push(int value);
 void pall(void);
