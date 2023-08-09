@@ -1,5 +1,9 @@
 #include "monty.h"
 
+void pall(void) {
+    // Implementation of the pall function
+}
+
 void push(int value) {
     if (stack_size >= STACK_MAX_SIZE) {
         fprintf(stderr, "Error: Stack overflow\n");
@@ -10,11 +14,5 @@ void push(int value) {
     stack_size++;
 }
 
-void pall(void) {
-    int i;
-
-    for (i = stack_size - 1; i >= 0; i--) {
-        printf("%d\n", data_stack[i]);
-    }
-}
+/* Other opcode functions here */
 

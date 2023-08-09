@@ -1,8 +1,9 @@
 #include "monty.h"
 #include <string.h>
 
-int data_stack[STACK_MAX_SIZE];
-int stack_size = 0;
+// Define the stack_size and data_stack here
+size_t stack_size = 0;
+int data_stack[STACK_MAX_SIZE]; // Use the constant here
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -41,3 +42,6 @@ int main(int argc, char *argv[]) {
     fclose(file);
     return (0);
 }
+
+/* Other function implementations here */
+

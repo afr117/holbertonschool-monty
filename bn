@@ -2,6 +2,6 @@
 
 git add .
 
-git commit -m "1..1000"
+git commit -m "1..100"
 
 git push
