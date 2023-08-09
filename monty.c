@@ -2,6 +2,9 @@
 #include <string.h>
 #include <ctype.h> // Include this header for isdigit function
 
+size_t stack_size = 0;
+int data_stack[STACK_MAX_SIZE];
+
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         fprintf(stderr, "USAGE: %s file\n", argv[0]);
