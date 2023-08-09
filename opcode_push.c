@@ -1,6 +1,4 @@
 #include "monty.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 void push(int value) {
     if (stack_size >= STACK_MAX_SIZE) {
@@ -19,3 +17,4 @@ void pall(void) {
         printf("%d\n", data_stack[i]);
     }
 }
+
