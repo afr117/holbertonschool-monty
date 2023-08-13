@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
                 push(value);
             } else {
                 fscanf(file, "%s", opcode);
-                fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
@@ -38,7 +38,8 @@ int main(int argc, char *argv[]) {
             fclose(file);
             exit(EXIT_FAILURE);
         }
-        line_number++;
+        while (fgetc(file) != '\n'); // Read until end of line
+        line_number++; // Increment line_number after each line
     }
 
     fclose(file);
