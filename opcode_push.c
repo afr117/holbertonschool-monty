@@ -11,8 +11,7 @@ void push(int value) {
 }
 
 void pall(void) {
-    for (size_t i = 0; i < stack_size; i++) {
-        printf("%d\n", data_stack[i]);
+    for (size_t i = stack_size; i > 0; i--) {
+        printf("%d\n", data_stack[i - 1]);
     }
 }
-
