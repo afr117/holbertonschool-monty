@@ -2,8 +2,8 @@
 #include <string.h>
 #include <ctype.h>
 
-int data_stack[STACK_MAX_SIZE];
 size_t stack_size = 0;
+int data_stack[STACK_MAX_SIZE];
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -26,7 +26,6 @@ int main(int argc, char *argv[]) {
             if (fscanf(file, "%d", &value) == 1) {
                 push(value);
             } else {
-                fscanf(file, "%s", opcode);
                 fprintf(stderr, "L%d: usage: push integer\n", line_number);
                 fclose(file);
                 exit(EXIT_FAILURE);
@@ -38,10 +37,10 @@ int main(int argc, char *argv[]) {
             fclose(file);
             exit(EXIT_FAILURE);
         }
-        line_number++;
+        line_number++; // Increment line_number after each line
     }
 
     fclose(file);
-    return 0;
+    return (0);
 }
 
