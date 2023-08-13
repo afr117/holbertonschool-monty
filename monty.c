@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
                 push(value);
             } else {
                 fscanf(file, "%s", opcode);
-                fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number - 1); // Corrected line number
                 fclose(file);
                 exit(EXIT_FAILURE);
             }

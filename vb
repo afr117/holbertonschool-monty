@@ -1,7 +1,10 @@
 #!/bin/bash
 
-git add bn monty.c monty.h opcode_push.c
+# Add the changes to the staging area
+git add vb monty.c monty.h opcode_push.c
 
-git commit -m "1..100"
+# Commit the changes with a meaningful message
+git commit -m "Updated files: monty.c, monty.h, opcode_push.c"
 
+# Push the changes to the remote repository
 git push
