@@ -1,4 +1,4 @@
- #include "monty.h"
+#include "monty.h"
 
 void push(int value) {
     if (stack_size >= STACK_MAX_SIZE) {
