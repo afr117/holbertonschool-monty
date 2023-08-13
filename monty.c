@@ -26,7 +26,8 @@ int main(int argc, char *argv[]) {
             if (fscanf(file, "%d", &value) == 1) {
                 push(value);
             } else {
-                fscanf(file, "%s", opcode);
+                // Consume the invalid input value
+                fscanf(file, "%*s");
                 fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
                 fclose(file);
                 exit(EXIT_FAILURE);
