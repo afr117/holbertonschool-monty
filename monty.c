@@ -7,7 +7,6 @@ int data_stack[STACK_MAX_SIZE];
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
-        fprintf(stderr, "USAGE: %s file\n", argv[0]);
         fprintf(stderr, "USAGE: monty file\n");
         exit(EXIT_FAILURE);
     }
