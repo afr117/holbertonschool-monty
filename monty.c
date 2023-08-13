@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
             fclose(file);
             exit(EXIT_FAILURE);
         }
+        while (fgetc(file) != '\n'); // Read until end of line
         line_number++; // Increment line_number after each line
     }
 
