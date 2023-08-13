@@ -26,9 +26,9 @@ int main(int argc, char *argv[]) {
             if (fscanf(file, "%d", &value) == 1) {
                 push(value);
             } else {
-                // Consume the invalid input value
-                fscanf(file, "%*s");
-                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
+                char rest_of_line[100];
+                fgets(rest_of_line, sizeof(rest_of_line), file);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
@@ -39,7 +39,6 @@ int main(int argc, char *argv[]) {
             fclose(file);
             exit(EXIT_FAILURE);
         }
-        while (fgetc(file) != '\n'); // Read until end of line
         line_number++; // Increment line_number after each line
     }
 
