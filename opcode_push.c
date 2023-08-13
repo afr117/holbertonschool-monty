@@ -1,8 +1,5 @@
 #include "monty.h"
 
-int data_stack[STACK_MAX_SIZE];
-size_t stack_size = 0; // Initialize stack_size to 0
-
 void push(int value) {
     if (stack_size >= STACK_MAX_SIZE) {
         fprintf(stderr, "Error: Stack overflow\n");
@@ -14,8 +11,7 @@ void push(int value) {
 }
 
 void pall(void) {
-    int i;
-    for (i = stack_size - 1; i >= 0; i--) {
+    for (size_t i = 0; i < stack_size; i++) {
         printf("%d\n", data_stack[i]);
     }
 }

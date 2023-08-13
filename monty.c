@@ -2,6 +2,9 @@
 #include <string.h>
 #include <ctype.h>
 
+int data_stack[STACK_MAX_SIZE];
+size_t stack_size = 0;
+
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         fprintf(stderr, "USAGE: %s file\n", argv[0]);
@@ -16,13 +19,14 @@ int main(int argc, char *argv[]) {
 
     char opcode[100];
     int line_number = 1;
-    int value; // Declare value here
 
     while (fscanf(file, "%s", opcode) != EOF) {
         if (strcmp(opcode, "push") == 0) {
+            int value;
             if (fscanf(file, "%d", &value) == 1) {
                 push(value);
             } else {
+                fscanf(file, "%s", opcode);
                 fprintf(stderr, "L%d: usage: push integer\n", line_number);
                 fclose(file);
                 exit(EXIT_FAILURE);
@@ -38,6 +42,6 @@ int main(int argc, char *argv[]) {
     }
 
     fclose(file);
-    return (0);
+    return 0;
 }
 
