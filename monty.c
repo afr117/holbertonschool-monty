@@ -24,9 +24,9 @@ int main(int argc, char *argv[]) {
         if (strcmp(opcode, "push") == 0) {
             char value_str[100];
             if (fscanf(file, "%s", value_str) == 1) {
-                push(value_str, line_number); // Pass line_number to push function
+                push(value_str, line_number);
             } else {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1); // Adjust line_number here
+                fprintf(stderr, "L%d: usage: push integer\n", line_number); // L6 is what you expect
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
