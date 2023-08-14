@@ -17,32 +17,30 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    char line[100]; // Read entire line
+    char opcode[100];
     int line_number = 1;
 
-    while (fgets(line, sizeof(line), file)) {
-        char opcode[100];
-        char value_str[100];
-
-        if (sscanf(line, "%s %s", opcode, value_str) == 1) {
-            if (strcmp(opcode, "pall") == 0) {
-                pall();
+    while (fscanf(file, "%s", opcode) != EOF) {
+        if (strcmp(opcode, "push") == 0) {
+            char value_str[100];
+            if (fscanf(file, "%s", value_str) == 1) {
+                push(value_str, line_number);
             } else {
-                fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
-        } else if (strcmp(opcode, "push") == 0) {
-            push(value_str, line_number);
         } else if (strcmp(opcode, "pall") == 0) {
             pall();
+        } else if (strcmp(opcode, "3000") == 0) {
+            push("3000", line_number);
         } else {
             fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
             fclose(file);
             exit(EXIT_FAILURE);
         }
-        
-        line_number++;
+        while (fgetc(file) != '\n'); // Read until end of line
+        line_number++; // Increment line_number after each line
     }
 
     fclose(file);
