@@ -6,23 +6,17 @@
 void push(char *value_str, int line_number) {
     int value;
 
-    char trimmed_value_str[100]; // Make sure the size is appropriate
-
-    // Trim leading and trailing spaces from value_str
-    size_t start = 0;
-    while (isspace(value_str[start])) {
-        start++;
+    if (!value_str) {
+        fprintf(stderr, "L%d: usage: push integer\n", line_number);
+        exit(EXIT_FAILURE);
     }
 
-    size_t end = strlen(value_str);
-    while (end > 0 && isspace(value_str[end - 1])) {
-        end--;
+    char *trimmed_value_str = value_str;
+    while (isspace(*trimmed_value_str)) {
+        trimmed_value_str++;
     }
 
-    strncpy(trimmed_value_str, value_str + start, end - start);
-    trimmed_value_str[end - start] = '\0';
-
-    if (trimmed_value_str[0] == '\0') {
+    if (*trimmed_value_str == '\0') {
         fprintf(stderr, "L%d: usage: push integer\n", line_number);
         exit(EXIT_FAILURE);
     }
