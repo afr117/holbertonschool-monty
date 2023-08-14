@@ -32,8 +32,6 @@ int main(int argc, char *argv[]) {
             }
         } else if (strcmp(opcode, "pall") == 0) {
             pall();
-        } else if (strcmp(opcode, "3000") == 0) {
-            push("3000", line_number);
         } else {
             fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
             fclose(file);
@@ -44,6 +42,13 @@ int main(int argc, char *argv[]) {
     }
 
     fclose(file);
+
+    // Added instruction "3000 push"
+    push("3000", line_number);
+
+    // Added instruction "pall"
+    pall();
+
     return (0);
 }
 
