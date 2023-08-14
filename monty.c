@@ -22,11 +22,10 @@ int main(int argc, char *argv[]) {
 
     while (fscanf(file, "%s", opcode) != EOF) {
         if (strcmp(opcode, "push") == 0) {
-            int value;
-            if (fscanf(file, "%d", &value) == 1) {
-                push(value);
+            char value_str[100];
+            if (fscanf(file, "%s", value_str) == 1) {
+                push(value_str, line_number);
             } else {
-                fscanf(file, "%s", opcode);
                 fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
                 fclose(file);
                 exit(EXIT_FAILURE);

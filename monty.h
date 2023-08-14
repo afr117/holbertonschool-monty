@@ -3,13 +3,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define STACK_MAX_SIZE 1024
 
-extern int data_stack[];
 extern size_t stack_size;
+extern int data_stack[STACK_MAX_SIZE];
 
-void push(int value);
+void push(char *value_str, int line_number);
 void pall(void);
 
 #endif /* MONTY_H */
