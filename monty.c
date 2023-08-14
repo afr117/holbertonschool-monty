@@ -32,7 +32,22 @@ int main(int argc, char *argv[]) {
             continue;
         }
 
-        // Rest of your code for opcode parsing
+        if (strcmp(trimmed_opcode, "push") == 0) {
+            char value_str[100];
+            if (fscanf(file, "%s", value_str) == 1) {
+                push(value_str, line_number);
+            } else {
+                fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                fclose(file);
+                exit(EXIT_FAILURE);
+            }
+        } else if (strcmp(trimmed_opcode, "pall") == 0) {
+            pall();
+        } else {
+            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, trimmed_opcode);
+            fclose(file);
+            exit(EXIT_FAILURE);
+        }
 
         line_number++; // Increment line_number after each line
     }
