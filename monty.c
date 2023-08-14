@@ -17,50 +17,22 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    char line[1024]; // Read entire line
+    char opcode[100];
     int line_number = 1;
 
-    while (fgets(line, sizeof(line), file) != NULL) {
-        // Trim leading and trailing spaces from line
-        char *trimmed_line = line;
-        while (*trimmed_line == ' ')
-            trimmed_line++;
+    while (fgets(opcode, sizeof(opcode), file) != NULL) {
+        // Trim leading and trailing spaces from opcode
+        char *trimmed_opcode = opcode;
+        while (*trimmed_opcode == ' ')
+            trimmed_opcode++;
 
         // Skip empty lines
-        if (*trimmed_line == '\0' || *trimmed_line == '\n') {
+        if (*trimmed_opcode == '\0' || *trimmed_opcode == '\n') {
             line_number++;
             continue;
         }
 
-        // Find the first space or newline to separate opcode from value
-        char *value_str = strchr(trimmed_line, ' ');
-        if (value_str != NULL)
-            *value_str++ = '\0'; // Separate opcode and value
-
-        // Trim leading and trailing spaces from value_str
-        if (value_str != NULL) {
-            while (*value_str == ' ')
-                value_str++;
-            char *end = value_str + strlen(value_str) - 1;
-            while (*end == ' ' || *end == '\n')
-                *end-- = '\0';
-        }
-
-        if (strcmp(trimmed_line, "push") == 0) {
-            if (value_str != NULL) {
-                push(value_str, line_number);
-            } else {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number);
-                fclose(file);
-                exit(EXIT_FAILURE);
-            }
-        } else if (strcmp(trimmed_line, "pall") == 0) {
-            pall();
-        } else {
-            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, trimmed_line);
-            fclose(file);
-            exit(EXIT_FAILURE);
-        }
+        // Rest of your code for opcode parsing
 
         line_number++; // Increment line_number after each line
     }
