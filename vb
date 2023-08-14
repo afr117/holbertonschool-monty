@@ -1,7 +1,6 @@
 #!/bin/bash
 
 
-
 # Add the changes to the staging area
 git add vb monty.c monty.h opcode_push.c
 

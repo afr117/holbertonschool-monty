@@ -17,27 +17,51 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    char opcode[100];
+    char line[1024]; // Read entire line
     int line_number = 1;
 
-    while (fscanf(file, "%s", opcode) != EOF) {
-        if (strcmp(opcode, "push") == 0) {
-            char value_str[100];
-            if (fscanf(file, "%s", value_str) == 1) {
+    while (fgets(line, sizeof(line), file) != NULL) {
+        // Trim leading and trailing spaces from line
+        char *trimmed_line = line;
+        while (*trimmed_line == ' ')
+            trimmed_line++;
+
+        // Skip empty lines
+        if (*trimmed_line == '\0' || *trimmed_line == '\n') {
+            line_number++;
+            continue;
+        }
+
+        // Find the first space or newline to separate opcode from value
+        char *value_str = strchr(trimmed_line, ' ');
+        if (value_str != NULL)
+            *value_str++ = '\0'; // Separate opcode and value
+
+        // Trim leading and trailing spaces from value_str
+        if (value_str != NULL) {
+            while (*value_str == ' ')
+                value_str++;
+            char *end = value_str + strlen(value_str) - 1;
+            while (*end == ' ' || *end == '\n')
+                *end-- = '\0';
+        }
+
+        if (strcmp(trimmed_line, "push") == 0) {
+            if (value_str != NULL) {
                 push(value_str, line_number);
             } else {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
-        } else if (strcmp(opcode, "pall") == 0) {
+        } else if (strcmp(trimmed_line, "pall") == 0) {
             pall();
         } else {
-            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, trimmed_line);
             fclose(file);
             exit(EXIT_FAILURE);
         }
-        while (fgetc(file) != '\n'); // Read until end of line
+
         line_number++; // Increment line_number after each line
     }
 
