@@ -24,14 +24,6 @@ int main(int argc, char *argv[]) {
         if (strcmp(opcode, "push") == 0) {
             char value_str[100];
             if (fscanf(file, "%s", value_str) == 1) {
-                int i;
-                for (i = 0; value_str[i]; i++) {
-                    if (!isdigit(value_str[i]) && value_str[i] != '-' && value_str[i] != '+') {
-                        fprintf(stderr, "L%d: usage: push integer\n", line_number);
-                        fclose(file);
-                        exit(EXIT_FAILURE);
-                    }
-                }
                 push(value_str, line_number);
             } else {
                 fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
@@ -52,3 +44,4 @@ int main(int argc, char *argv[]) {
     fclose(file);
     return (0);
 }
+

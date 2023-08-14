@@ -1,7 +1,6 @@
 #include "monty.h"
 #include <ctype.h>
 
-
 void push(char *value_str, int line_number) {
     int value;
 
@@ -37,7 +36,6 @@ void push(char *value_str, int line_number) {
     data_stack[stack_size] = value;
     stack_size++;
 }
-
 void pall(void) {
     for (size_t i = stack_size; i > 0; i--) {
         printf("%d\n", data_stack[i - 1]);
