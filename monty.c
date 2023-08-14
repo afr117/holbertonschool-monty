@@ -24,10 +24,9 @@ int main(int argc, char *argv[]) {
         if (strcmp(opcode, "push") == 0) {
             char value_str[100];
             if (fscanf(file, "%s", value_str) == 1) {
-                push(value_str, line_number);
+                push(value_str, line_number); // Pass line_number to push function
             } else {
-                fscanf(file, "%*[^\n]"); // Consume the rest of the line
-                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1); // Adjust line_number here
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
@@ -38,11 +37,11 @@ int main(int argc, char *argv[]) {
             fclose(file);
             exit(EXIT_FAILURE);
         }
-        while (fgetc(file) != '\n'); // Read and discard the new line character
+        while (fgetc(file) != '\n'); // Read until end of line
         line_number++; // Increment line_number after each line
     }
 
     fclose(file);
-    return 0;
+    return (0);
 }
 
