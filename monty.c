@@ -42,13 +42,6 @@ int main(int argc, char *argv[]) {
     }
 
     fclose(file);
-
-    // Added instruction "3000 push"
-    push("3000", line_number);
-
-    // Added instruction "pall"
-    pall();
-
     return (0);
 }
 
