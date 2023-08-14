@@ -20,25 +20,24 @@ int main(int argc, char *argv[]) {
     char opcode[100];
     int line_number = 1;
 
-    while (fscanf(file, "%s", opcode) != EOF) {
-        if (strcmp(opcode, "push") == 0) {
-            char value_str[100];
-            if (fscanf(file, "%s", value_str) == 1) {
-                push(value_str, line_number);
-            } else {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
-                fclose(file);
-                exit(EXIT_FAILURE);
-            }
-        } else if (strcmp(opcode, "pall") == 0) {
+    while (fgets(opcode, sizeof(opcode), file)) {
+        char value_str[100];
+        if (opcode[0] == '\n' || opcode[0] == ' ') {
+            line_number++;
+            continue;
+        }
+        
+        if (sscanf(opcode, "push %s", value_str) == 1) {
+            push(value_str, line_number);
+        } else if (strcmp(opcode, "pall\n") == 0) {
             pall();
         } else {
-            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+            fprintf(stderr, "L%d: unknown instruction %s", line_number, opcode);
             fclose(file);
             exit(EXIT_FAILURE);
         }
-        while (fgetc(file) != '\n'); // Read until end of line
-        line_number++; // Increment line_number after each line
+        
+        line_number++;
     }
 
     fclose(file);
