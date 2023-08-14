@@ -1,21 +1,28 @@
 #include "monty.h"
 #include <ctype.h>
-
+#include <stdio.h>
+#include <string.h>
 
 void push(char *value_str, int line_number) {
     int value;
 
-    if (!value_str) {
-        fprintf(stderr, "L%d: usage: push integer\n", line_number);
-        exit(EXIT_FAILURE);
+    char trimmed_value_str[100]; // Make sure the size is appropriate
+
+    // Trim leading and trailing spaces from value_str
+    size_t start = 0;
+    while (isspace(value_str[start])) {
+        start++;
     }
 
-    // Check for extra spaces before/after the value string
-    char *trimmed_value_str = value_str;
-    while (*trimmed_value_str == ' ')
-        trimmed_value_str++;
+    size_t end = strlen(value_str);
+    while (end > 0 && isspace(value_str[end - 1])) {
+        end--;
+    }
 
-    if (*trimmed_value_str == '\0') {
+    strncpy(trimmed_value_str, value_str + start, end - start);
+    trimmed_value_str[end - start] = '\0';
+
+    if (trimmed_value_str[0] == '\0') {
         fprintf(stderr, "L%d: usage: push integer\n", line_number);
         exit(EXIT_FAILURE);
     }
