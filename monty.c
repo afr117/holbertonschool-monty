@@ -17,34 +17,39 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    char opcode[100];
+    char line[100];
     int line_number = 1;
 
-    while (fgets(opcode, sizeof(opcode), file) != NULL) {
-        // Trim leading and trailing spaces from opcode
-        char *trimmed_opcode = opcode;
-        while (*trimmed_opcode == ' ')
-            trimmed_opcode++;
+    while (fgets(line, sizeof(line), file) != NULL) {
+        // Trim leading and trailing spaces from the line
+        char *trimmed_line = line;
+        while (*trimmed_line == ' ')
+            trimmed_line++;
+        char *end = trimmed_line + strlen(trimmed_line) - 1;
+        while (*end == ' ' || *end == '\n')
+            *end-- = '\0';
 
         // Skip empty lines
-        if (*trimmed_opcode == '\0' || *trimmed_opcode == '\n') {
+        if (*trimmed_line == '\0') {
             line_number++;
             continue;
         }
 
-        if (strcmp(trimmed_opcode, "push") == 0) {
-            char value_str[100];
-            if (fscanf(file, "%s", value_str) == 1) {
-                push(value_str, line_number);
+        char opcode[100];
+        char value_str[100];
+        if (sscanf(trimmed_line, "%s %s", opcode, value_str) == 1) {
+            // Handle opcode without value
+            if (strcmp(opcode, "pall") == 0) {
+                pall();
             } else {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
-        } else if (strcmp(trimmed_opcode, "pall") == 0) {
-            pall();
+        } else if (strcmp(opcode, "push") == 0) {
+            push(value_str, line_number);
         } else {
-            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, trimmed_opcode);
+            fprintf(stderr, "L%d: usage: push integer\n", line_number);
             fclose(file);
             exit(EXIT_FAILURE);
         }
