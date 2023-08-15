@@ -1,4 +1,4 @@
-#include "monty.h"
+ #include "monty.h"
 #include <string.h>
 #include <ctype.h>
 
@@ -20,48 +20,24 @@ int main(int argc, char *argv[]) {
     char opcode[100];
     int line_number = 1;
 
-    while (fgets(opcode, sizeof(opcode), file) != NULL) {
-        // Trim leading and trailing spaces from opcode
-        char *trimmed_opcode = opcode;
-        while (*trimmed_opcode == ' ')
-            trimmed_opcode++;
-
-        // Skip empty lines
-        if (*trimmed_opcode == '\0' || *trimmed_opcode == '\n') {
-            line_number++;
-            continue;
-        }
-
-        // Find the first space or newline to separate opcode from value
-        char *value_str = strchr(trimmed_opcode, ' ');
-        if (value_str != NULL)
-            *value_str++ = '\0'; // Separate opcode and value
-
-        // Trim leading and trailing spaces from value_str
-        if (value_str != NULL) {
-            while (*value_str == ' ')
-                value_str++;
-            char *end = value_str + strlen(value_str) - 1;
-            while (*end == ' ' || *end == '\n')
-                *end-- = '\0';
-        }
-
-        if (strcmp(trimmed_opcode, "push") == 0) {
-            if (value_str != NULL && isdigit(*value_str)) {
+    while (fscanf(file, "%s", opcode) != EOF) {
+        if (strcmp(opcode, "push") == 0) {
+            char value_str[100];
+            if (fscanf(file, "%s", value_str) == 1) {
                 push(value_str, line_number);
             } else {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
-        } else if (strcmp(trimmed_opcode, "pall") == 0) {
+        } else if (strcmp(opcode, "pall") == 0) {
             pall();
         } else {
-            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, trimmed_opcode);
+            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
             fclose(file);
             exit(EXIT_FAILURE);
         }
-
+        while (fgetc(file) != '\n'); // Read until end of line
         line_number++; // Increment line_number after each line
     }
 
