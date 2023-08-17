@@ -1,4 +1,4 @@
- #include "monty.h"
+#include "monty.h"
 #include <string.h>
 #include <ctype.h>
 
@@ -18,15 +18,16 @@ int main(int argc, char *argv[]) {
     }
 
     char opcode[100];
-    int line_number = 1;
+    int line_number = 0; // Initialize line_number to 0
 
     while (fscanf(file, "%s", opcode) != EOF) {
+        line_number++; // Increment line_number before processing the line
         if (strcmp(opcode, "push") == 0) {
             char value_str[100];
             if (fscanf(file, "%s", value_str) == 1) {
                 push(value_str, line_number);
             } else {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
@@ -38,11 +39,9 @@ int main(int argc, char *argv[]) {
             exit(EXIT_FAILURE);
         }
         while (fgetc(file) != '\n'); // Read until end of line
-        line_number++; // Increment line_number after each line
     }
 
     fclose(file);
     return (0);
 }
-
 
