@@ -21,6 +21,13 @@ int main(int argc, char *argv[]) {
     int line_number = 1;
 
     while (fscanf(file, "%s", opcode) != EOF) {
+        // Check for stack overflow
+        if (stack_size >= STACK_MAX_SIZE) {
+            fprintf(stderr, "L%d: Error: Stack overflow\n", line_number);
+            fclose(file);
+            exit(EXIT_FAILURE);
+        }
+
         if (strcmp(opcode, "push") == 0) {
             char value_str[100];
             if (fscanf(file, "%s", value_str) == 1) {
@@ -39,13 +46,6 @@ int main(int argc, char *argv[]) {
         }
         while (fgetc(file) != '\n'); // Read until end of line
         line_number++; // Increment line_number after each line
-        
-        // Check for stack overflow
-        if (stack_size > STACK_MAX_SIZE) {
-            fprintf(stderr, "L%d: Error: Stack overflow\n", line_number - 1);
-            fclose(file);
-            exit(EXIT_FAILURE);
-        }
     }
 
     fclose(file);
