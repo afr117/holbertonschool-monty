@@ -28,12 +28,6 @@ int main(int argc, char *argv[]) {
         if (*trimmed_line == '\n' || *trimmed_line == '\0')
             continue;
 
-        if (stack_size >= STACK_MAX_SIZE) {
-            fprintf(stderr, "L%d: Error: Stack overflow\n", line_number);
-            fclose(file);
-            exit(EXIT_FAILURE);
-        }
-
         // Remove newline character from the end of the line
         size_t len = strlen(trimmed_line);
         if (len > 0 && trimmed_line[len - 1] == '\n')
