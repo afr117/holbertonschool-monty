@@ -21,16 +21,13 @@ int main(int argc, char *argv[]) {
     int line_number = 1;
 
     while (fgets(opcode, sizeof(opcode), file)) {
-        // Remove leading and trailing whitespace
         char *trimmed_opcode = opcode;
         while (*trimmed_opcode == ' ' || *trimmed_opcode == '\t')
             trimmed_opcode++;
         
-        // Skip empty lines
         if (*trimmed_opcode == '\n' || *trimmed_opcode == '\0')
             continue;
 
-        // Check for stack overflow
         if (stack_size >= STACK_MAX_SIZE) {
             fprintf(stderr, "L%d: Error: Stack overflow\n", line_number);
             fclose(file);
@@ -54,7 +51,7 @@ int main(int argc, char *argv[]) {
             exit(EXIT_FAILURE);
         }
         
-        line_number++; // Increment line_number after each line
+        line_number++;
     }
 
     fclose(file);
