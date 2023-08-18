@@ -17,15 +17,15 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    char opcode[100];
+    char line[1000];  // Adjust the size as needed
     int line_number = 1;
 
-    while (fgets(opcode, sizeof(opcode), file)) {
-        char *trimmed_opcode = opcode;
-        while (*trimmed_opcode == ' ' || *trimmed_opcode == '\t')
-            trimmed_opcode++;
-        
-        if (*trimmed_opcode == '\n' || *trimmed_opcode == '\0')
+    while (fgets(line, sizeof(line), file)) {
+        char *trimmed_line = line;
+        while (*trimmed_line == ' ' || *trimmed_line == '\t')
+            trimmed_line++;
+
+        if (*trimmed_line == '\n' || *trimmed_line == '\0')
             continue;
 
         if (stack_size >= STACK_MAX_SIZE) {
@@ -34,19 +34,25 @@ int main(int argc, char *argv[]) {
             exit(EXIT_FAILURE);
         }
 
-        if (strcmp(trimmed_opcode, "push") == 0) {
-            char value_str[100];
-            if (fscanf(file, "%s", value_str) == 1) {
-                push(value_str, line_number);
-            } else {
+        char *opcode = strtok(trimmed_line, " \t\n");
+        if (opcode == NULL) {
+            fprintf(stderr, "L%d: unknown instruction\n", line_number);
+            fclose(file);
+            exit(EXIT_FAILURE);
+        }
+
+        if (strcmp(opcode, "push") == 0) {
+            char *value_str = strtok(NULL, " \t\n");
+            if (value_str == NULL) {
                 fprintf(stderr, "L%d: usage: push integer\n", line_number);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
-        } else if (strcmp(trimmed_opcode, "pall") == 0) {
+            push(value_str, line_number);
+        } else if (strcmp(opcode, "pall") == 0) {
             pall();
         } else {
-            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, trimmed_opcode);
+            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
             fclose(file);
             exit(EXIT_FAILURE);
         }
