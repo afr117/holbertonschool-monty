@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
             if (fscanf(file, "%s", value_str) == 1) {
                 push(value_str, line_number);
             } else {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
         
         // Check for stack overflow
         if (stack_size > STACK_MAX_SIZE) {
-            fprintf(stderr, "L%d: Error: Stack overflow\n", line_number);
+            fprintf(stderr, "L%d: Error: Stack overflow\n", line_number - 1);
             fclose(file);
             exit(EXIT_FAILURE);
         }
