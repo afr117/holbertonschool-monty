@@ -60,10 +60,4 @@ int main(int argc, char *argv[]) {
     fclose(file);
     return (0);
 }
-This version of the main loop reads lines using fgets() instead of fscanf() and processes them accordingly. It skips empty lines and handles lines with whitespace before or after the instruction. This should provide the correct output for the mentioned case while minimizing the impact on the rest of the code.
-
-
-
-
-
 
