@@ -34,6 +34,11 @@ int main(int argc, char *argv[]) {
             exit(EXIT_FAILURE);
         }
 
+        // Remove newline character from the end of the line
+        size_t len = strlen(trimmed_line);
+        if (len > 0 && trimmed_line[len - 1] == '\n')
+            trimmed_line[len - 1] = '\0';
+
         char *opcode = strtok(trimmed_line, " \t\n");
         if (opcode == NULL) {
             fprintf(stderr, "L%d: unknown instruction\n", line_number);
