@@ -17,42 +17,32 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    char line[100]; // Buffer to hold each line from the file
-    int line_number = 0;
+    char opcode[100];
+    int line_number = 1;
 
-    while (fgets(line, sizeof(line), file) != NULL) {
-        line_number++;
-        
-        // Remove leading and trailing whitespace from the line
-        char *trimmed_line = line;
-        while (*trimmed_line == ' ' || *trimmed_line == '\t')
-            trimmed_line++;
-
-        // Skip empty lines
-        if (*trimmed_line == '\0' || *trimmed_line == '\n')
-            continue;
-
-        // Parse the opcode and value from the trimmed line
-        char opcode[100];
-        char value_str[100];
-        if (sscanf(trimmed_line, "%s %s", opcode, value_str) >= 1) {
-            if (strcmp(opcode, "push") == 0) {
-                if (*value_str != '\0' && isdigit(*value_str)) {
-                    push(value_str, line_number);
-                } else {
-                    fprintf(stderr, "L%d: usage: push integer\n", line_number);
-                    fclose(file);
-                    exit(EXIT_FAILURE);
-                }
-            } else if (strcmp(opcode, "pall") == 0) {
-                pall();
+    while (fscanf(file, "%s", opcode) != EOF) {
+        if (strcmp(opcode, "push") == 0) {
+            char value_str[100];
+            if (fscanf(file, "%s", value_str) == 1) {
+                push(value_str, line_number);
             } else {
-                fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
+        } else if (strcmp(opcode, "pall") == 0) {
+            pall();
         } else {
-            fprintf(stderr, "L%d: invalid instruction format\n", line_number);
+            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+            fclose(file);
+            exit(EXIT_FAILURE);
+        }
+        while (fgetc(file) != '\n'); // Read until end of line
+        line_number++; // Increment line_number after each line
+        
+        // Check for stack overflow
+        if (stack_size > STACK_MAX_SIZE) {
+            fprintf(stderr, "L%d: Error: Stack overflow\n", line_number);
             fclose(file);
             exit(EXIT_FAILURE);
         }
@@ -61,3 +51,4 @@ int main(int argc, char *argv[]) {
     fclose(file);
     return (0);
 }
+
