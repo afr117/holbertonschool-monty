@@ -21,14 +21,34 @@ int main(int argc, char *argv[]) {
     int line_number = 1;
 
     while (fgets(line, sizeof(line), file)) {
-        char opcode[100];
-        int value;
-        
-        if (sscanf(line, "%99s %d", opcode, &value) == 2) {
-            if (strcmp(opcode, "push") == 0) {
-                char *rest_of_line = strchr(line, ' ') + 1;
-                push(rest_of_line, line_number);
+        char *trimmed_line = line;
+        while (*trimmed_line == ' ' || *trimmed_line == '\t')
+            trimmed_line++;
+
+        if (*trimmed_line == '\n' || *trimmed_line == '\0')
+            continue;
+
+        // Remove newline character from the end of the line
+        size_t len = strlen(trimmed_line);
+        if (len > 0 && trimmed_line[len - 1] == '\n')
+            trimmed_line[len - 1] = '\0';
+
+        // Parse the opcode and arguments
+        char *opcode = strtok(trimmed_line, " \t\n");
+        if (opcode == NULL) {
+            fprintf(stderr, "L%d: unknown instruction\n", line_number);
+            fclose(file);
+            exit(EXIT_FAILURE);
+        }
+
+        if (strcmp(opcode, "push") == 0) {
+            char *value_str = strtok(NULL, " \t\n");
+            if (value_str == NULL || !is_integer(value_str)) {
+                fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                fclose(file);
+                exit(EXIT_FAILURE);
             }
+            push(value_str, line_number);
         } else if (strcmp(opcode, "pall") == 0) {
             pall();
         } else {
@@ -42,5 +62,18 @@ int main(int argc, char *argv[]) {
 
     fclose(file);
     return (0);
+}
+
+// Function to check if a string represents a valid integer
+bool is_integer(const char *str) {
+    if (*str == '\0') {
+        return false;
+    }
+    for (const char *p = str; *p != '\0'; p++) {
+        if (!isdigit(*p) && (*p != '-' && p == str)) {
+            return false;
+        }
+    }
+    return true;
 }
 
