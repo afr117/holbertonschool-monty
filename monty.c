@@ -33,7 +33,6 @@ int main(int argc, char *argv[]) {
         if (len > 0 && trimmed_line[len - 1] == '\n')
             trimmed_line[len - 1] = '\0';
 
-        // Parse the opcode and arguments
         char *opcode = strtok(trimmed_line, " \t\n");
         if (opcode == NULL) {
             fprintf(stderr, "L%d: unknown instruction\n", line_number);
@@ -43,7 +42,7 @@ int main(int argc, char *argv[]) {
 
         if (strcmp(opcode, "push") == 0) {
             char *value_str = strtok(NULL, " \t\n");
-            if (value_str == NULL || !is_integer(value_str)) {
+            if (value_str == NULL) {
                 fprintf(stderr, "L%d: usage: push integer\n", line_number);
                 fclose(file);
                 exit(EXIT_FAILURE);
@@ -62,18 +61,5 @@ int main(int argc, char *argv[]) {
 
     fclose(file);
     return (0);
-}
-
-// Function to check if a string represents a valid integer
-bool is_integer(const char *str) {
-    if (*str == '\0') {
-        return false;
-    }
-    for (const char *p = str; *p != '\0'; p++) {
-        if (!isdigit(*p) && (*p != '-' && p == str)) {
-            return false;
-        }
-    }
-    return true;
 }
 
