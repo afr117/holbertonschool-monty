@@ -10,14 +10,10 @@ void push(char *value_str, int line_number) {
         exit(EXIT_FAILURE);
     }
 
-    // Remove leading and trailing spaces from the value string
+    // Check for extra spaces before/after the value string
     char *trimmed_value_str = value_str;
     while (*trimmed_value_str == ' ')
         trimmed_value_str++;
-    char *end = trimmed_value_str + strlen(trimmed_value_str) - 1;
-    while (*end == ' ')
-        end--;
-    *(end + 1) = '\0';
 
     if (*trimmed_value_str == '\0') {
         fprintf(stderr, "L%d: usage: push integer\n", line_number);
@@ -34,7 +30,7 @@ void push(char *value_str, int line_number) {
     value = atoi(trimmed_value_str);
 
     if (stack_size >= STACK_MAX_SIZE) {
-        fprintf(stderr, "Error: Stack overflow\n");
+        fprintf(stderr, "L%d: Error: Stack overflow\n", line_number);
         exit(EXIT_FAILURE);
     }
 
