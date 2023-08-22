@@ -26,13 +26,14 @@ int main(int argc, char *argv[]) {
             if (fscanf(file, "%s", value_str) == 1) {
                 push(value_str, line_number);
             } else {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
         } else if (strcmp(opcode, "pall") == 0) {
             pall();
         } else {
+            // Print the opcode and line number
             fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
             fclose(file);
             exit(EXIT_FAILURE);
