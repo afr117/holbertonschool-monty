@@ -20,10 +20,10 @@ int main(int argc, char *argv[]) {
     char opcode[100];
     int line_number = 1;
 
-    while (fscanf(file, " %s", opcode) != EOF) {
+    while (fscanf(file, " %s", opcode) != EOF) { // Note the space before %s
         if (strcmp(opcode, "push") == 0) {
             char value_str[100];
-            if (fscanf(file, "%s", value_str) == 1) {
+            if (fscanf(file, " %s", value_str) == 1) { // Note the space before %s
                 push(value_str, line_number);
             } else {
                 fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
