@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     char opcode[100];
     int line_number = 1;
 
-    while (fscanf(file, "%s", opcode) != EOF) {
+    while (fscanf(file, " %s", opcode) != EOF) {
         if (strcmp(opcode, "push") == 0) {
             char value_str[100];
             if (fscanf(file, "%s", value_str) == 1) {
