@@ -21,19 +21,12 @@ int main(int argc, char *argv[]) {
     int line_number = 1;
 
     while (fscanf(file, "%s", opcode) != EOF) {
-        if (opcode[0] == '#') {
-            // Skip the rest of the line for comments
-            while (fgetc(file) != '\n');
-            line_number++;
-            continue;
-        }
-
         if (strcmp(opcode, "push") == 0) {
             char value_str[100];
             if (fscanf(file, "%s", value_str) == 1) {
                 push(value_str, line_number);
             } else {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
