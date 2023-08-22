@@ -21,6 +21,13 @@ int main(int argc, char *argv[]) {
     int line_number = 1;
 
     while (fscanf(file, "%s", opcode) != EOF) {
+        if (opcode[0] == '#') {
+            // Skip the rest of the line for comments
+            while (fgetc(file) != '\n');
+            line_number++;
+            continue;
+        }
+
         if (strcmp(opcode, "push") == 0) {
             char value_str[100];
             if (fscanf(file, "%s", value_str) == 1) {
@@ -33,7 +40,6 @@ int main(int argc, char *argv[]) {
         } else if (strcmp(opcode, "pall") == 0) {
             pall();
         } else {
-            // Print the opcode and line number
             fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
             fclose(file);
             exit(EXIT_FAILURE);
