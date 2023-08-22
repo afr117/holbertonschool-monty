@@ -17,37 +17,19 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    char line[1000];  // Adjust the size as needed
+    char opcode[100];
     int line_number = 1;
 
-    while (fgets(line, sizeof(line), file)) {
-        char *trimmed_line = line;
-        while (*trimmed_line == ' ' || *trimmed_line == '\t')
-            trimmed_line++;
-
-        if (*trimmed_line == '\n' || *trimmed_line == '\0')
-            continue;
-
-        // Remove newline character from the end of the line
-        size_t len = strlen(trimmed_line);
-        if (len > 0 && trimmed_line[len - 1] == '\n')
-            trimmed_line[len - 1] = '\0';
-
-        char *opcode = strtok(trimmed_line, " \t\n");
-        if (opcode == NULL) {
-            fprintf(stderr, "L%d: unknown instruction\n", line_number);
-            fclose(file);
-            exit(EXIT_FAILURE);
-        }
-
+    while (fscanf(file, "%s", opcode) != EOF) {
         if (strcmp(opcode, "push") == 0) {
-            char *value_str = strtok(NULL, " \t\n");
-            if (value_str == NULL) {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number);
+            char value_str[100];
+            if (fscanf(file, "%s", value_str) == 1) {
+                push(value_str, line_number);
+            } else {
+                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
-            push(value_str, line_number);
         } else if (strcmp(opcode, "pall") == 0) {
             pall();
         } else {
@@ -55,8 +37,8 @@ int main(int argc, char *argv[]) {
             fclose(file);
             exit(EXIT_FAILURE);
         }
-        
-        line_number++;
+        while (fgetc(file) != '\n'); // Read until end of line
+        line_number++; // Increment line_number after each line
     }
 
     fclose(file);
