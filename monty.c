@@ -17,27 +17,30 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    char opcode[100];
+    char line[100];
     int line_number = 1;
 
-    while (fscanf(file, " %s", opcode) != EOF) { // Note the space before %s
-        if (strcmp(opcode, "push") == 0) {
-            char value_str[100];
-            if (fscanf(file, " %s", value_str) == 1) { // Note the space before %s
-                push(value_str, line_number);
+    while (fgets(line, sizeof(line), file)) {
+        char opcode[100];
+        int num_args = sscanf(line, " %s", opcode);
+        if (num_args == 1) {
+            if (strcmp(opcode, "push") == 0) {
+                char value_str[100];
+                if (sscanf(line, " %*s %s", value_str) == 1) {
+                    push(value_str, line_number);
+                } else {
+                    fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                    fclose(file);
+                    exit(EXIT_FAILURE);
+                }
+            } else if (strcmp(opcode, "pall") == 0) {
+                pall();
             } else {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number + 1);
+                fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
                 fclose(file);
                 exit(EXIT_FAILURE);
             }
-        } else if (strcmp(opcode, "pall") == 0) {
-            pall();
-        } else {
-            fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-            fclose(file);
-            exit(EXIT_FAILURE);
         }
-        while (fgetc(file) != '\n'); // Read until end of line
         line_number++; // Increment line_number after each line
     }
 
