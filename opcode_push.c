@@ -10,12 +10,23 @@ void push(char *value_str, int line_number) {
         exit(EXIT_FAILURE);
     }
 
-    if (strcmp(value_str, "0") != 0 && strcmp(value_str, "1") != 0) {
+    // Check for extra spaces before/after the value string
+    char *trimmed_value_str = value_str;
+    while (*trimmed_value_str == ' ')
+        trimmed_value_str++;
+
+    if (*trimmed_value_str == '\0') {
         fprintf(stderr, "L%d: usage: push integer\n", line_number);
         exit(EXIT_FAILURE);
     }
 
-    value = atoi(value_str);
+    // Check if the input value is 0 or 1
+    if (strcmp(trimmed_value_str, "0") != 0 && strcmp(trimmed_value_str, "1") != 0) {
+        fprintf(stderr, "L%d: push value must be 0 or 1\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
+    value = atoi(trimmed_value_str);
 
     if (stack_size >= STACK_MAX_SIZE) {
         fprintf(stderr, "Error: Stack overflow\n");
