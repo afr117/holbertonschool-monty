@@ -1,6 +1,13 @@
 #include "monty.h"
 #include <ctype.h>
 
+/**
+ * push - Pushes an integer onto the stack.
+ * @value_str: The string containing the integer value.
+ * @line_number: The current line number in the file.
+ *
+ * This function pushes an integer onto the stack.
+ */
 
 void push(char *value_str, int line_number) {
     int value;
@@ -37,6 +44,12 @@ void push(char *value_str, int line_number) {
     data_stack[stack_size] = value;
     stack_size++;
 }
+
+/**
+ * pall - Prints all the elements of the stack.
+ *
+ * This function prints all the elements of the stack.
+ */
 
 void pall(void) {
     for (size_t i = stack_size; i > 0; i--) {
