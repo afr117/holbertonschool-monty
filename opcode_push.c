@@ -56,13 +56,14 @@ void push(char *value_str, int line_number)
 }
 
 /**
- * pall - Prints all elements in the stack.
+ * push - Pushes an element onto the stack.
  * @stack: Pointer to the top of the stack.
  * @line_number: Line number of the instruction in the Monty file.
  *
  * Description:
- * This function prints all the integer values stored in the stack, starting
- * from the top of the stack.
+ * This function pushes a new element onto the stack with the integer value
+ * specified by the @value_str parameter. If @value_str is not a valid integer,
+ * an error message is printed, and the program exits.
  */
 
 
