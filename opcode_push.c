@@ -2,15 +2,10 @@
 #include <ctype.h>
 
 /**
- * push - Pushes an element onto the stack.
+ * push - Pushes an element onto the stack
  * @value_str: String representation of the value to be pushed
  * @stack: Pointer to the top of the stack.
- * @line_number: Line number of the instruction in the Monty file.
- *
- * Description:
- * This function pushes a new element onto the stack with the integer value
- * specified by @value_str. If @value_str is not a valid integer, an error
- * message is printed and the program exits.
+ * @line_number: Line number of the push instruction in the file
  */
 
 void push(char *value_str, int line_number)
