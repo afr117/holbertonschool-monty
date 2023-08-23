@@ -2,6 +2,14 @@
 #include <string.h>
 #include <ctype.h>
 
+/**
+ * main - Entry point of the program
+ * @argc: Number of command-line arguments
+ * @argv: Array of command-line argument strings
+ *
+ * Return: Always 0 (success)
+ */
+
 size_t stack_size = 0;
 int data_stack[STACK_MAX_SIZE];
 
