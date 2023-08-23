@@ -21,14 +21,16 @@ void pall(void);
 
 int main(int argc, char *argv[])
 {
-	if (argc != 2) {
+	if (argc != 2)
+	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 
 	FILE *file = fopen(argv[1], "r");
 
-	if (!file) {
+	if (!file)
+	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
@@ -46,10 +48,12 @@ int main(int argc, char *argv[])
 			if (strcmp(opcode, "push") == 0)
 			{
 				char value_str[100];
+
 				if (sscanf(line, " %*s %s", value_str) == 1)
 				{
 					push(value_str, line_number);
-				} else {
+				} else
+				{
 					fprintf(stderr, "L%d: usage: push integer\n", line_number);
 					fclose(file);
 					exit(EXIT_FAILURE);
@@ -57,13 +61,14 @@ int main(int argc, char *argv[])
 			} else if (strcmp(opcode, "pall") == 0)
 			{
 				pall();
-			} else {
+			} else
+			{
 				fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 				fclose(file);
 				exit(EXIT_FAILURE);
 			}
 		}
-		line_number++; // Increment line_number after each line
+		line_number++; /* Increment line_number after each line */
 	}
 
 	fclose(file);
