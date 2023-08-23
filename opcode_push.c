@@ -1,15 +1,8 @@
 #include "monty.h"
 #include <ctype.h>
 
-/**
- * push - Pushes an integer onto the stack.
- * @value_str: The string containing the integer value.
- * @line_number: The current line number in the file.
- *
- * This function pushes an integer onto the stack.
- */
-
-void push(char *value_str, int line_number) {
+void push(char *value_str, int line_number)
+{
     int value;
 
     if (!value_str) {
@@ -19,7 +12,7 @@ void push(char *value_str, int line_number) {
 
     // Check for extra spaces before/after the value string
     char *trimmed_value_str = value_str;
-    while (*trimmed_value_str == ' ')
+    while (*trimmed_value_str == '\t')
         trimmed_value_str++;
 
     if (*trimmed_value_str == '\0') {
@@ -45,13 +38,8 @@ void push(char *value_str, int line_number) {
     stack_size++;
 }
 
-/**
- * pall - Prints all the elements of the stack.
- *
- * This function prints all the elements of the stack.
- */
-
-void pall(void) {
+void pall(void)
+{
     for (size_t i = stack_size; i > 0; i--) {
         printf("%d\n", data_stack[i - 1]);
     }
