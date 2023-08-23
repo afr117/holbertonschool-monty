@@ -4,7 +4,6 @@
 /**
  * push - Pushes an element onto the stack
  * @value_str: String representation of the value to be pushed
- * @stack: Pointer to the top of the stack.
  * @line_number: Line number of the push instruction in the file
  */
 
