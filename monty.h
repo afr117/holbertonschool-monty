@@ -12,5 +12,6 @@ extern int data_stack[STACK_MAX_SIZE];
 
 void push(char *value_str, int line_number);
 void pall(void);
+void pint(int line_number);
 
 #endif /* MONTY_H */

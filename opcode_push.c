@@ -45,6 +45,8 @@ void push(char *value_str, int line_number)
 	}
 	data_stack[stack_size] = value;
 	stack_size++;
+
+	pint(line_number);
 }
 
 /**

@@ -74,3 +74,14 @@ int main(int argc, char *argv[])
 	fclose(file);
 	return (0);
 }
+
+void pint(int line_number) {
+	if (stack_size > 0) {
+	printf("%d\n", data_stack[stack_size - 1]);
+	} else
+	{
+	fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+	exit(EXIT_FAILURE);
+}
+}
+
