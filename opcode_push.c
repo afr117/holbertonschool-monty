@@ -30,7 +30,9 @@ void push(char *value_str, int line_number)
 
 	for (size_t i = 0; trimmed_value_str[i]; i++)
 {
-	if (!isdigit(trimmed_value_str[i]) && trimmed_value_str[i] != '-' && trimmed_value_str[i] != '+')
+	if (!isdigit(trimmed_value_str[i]) &&
+	trimmed_value_str[i] != '-' &&
+	trimmed_value_str[i] != '+')
 {
 	fprintf(stderr, "L%d: usage: push integer\n", line_number);
 	exit(EXIT_FAILURE);
