@@ -6,19 +6,20 @@ size_t stack_size = 0;
 int data_stack[STACK_MAX_SIZE];
 
 int main(int argc, char *argv[]) {
+    FILE *file;
+    char line[100];
+    int line_number = 1;
+
     if (argc != 2) {
         fprintf(stderr, "USAGE: monty file\n");
         exit(EXIT_FAILURE);
     }
 
-    FILE *file = fopen(argv[1], "r");
+    file = fopen(argv[1], "r");
     if (!file) {
         fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
         exit(EXIT_FAILURE);
     }
-
-    char line[100];
-    int line_number = 1;
 
     while (fgets(line, sizeof(line), file)) {
         char opcode[100];
@@ -47,3 +48,4 @@ int main(int argc, char *argv[]) {
     fclose(file);
     return (0);
 }
+

@@ -1,6 +1,6 @@
 #include "monty.h"
+#include <string.h> // Include for strcmp
 #include <ctype.h>
-
 
 void push(char *value_str, int line_number) {
     int value;
