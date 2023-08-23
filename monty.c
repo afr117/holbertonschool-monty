@@ -1,67 +1,87 @@
 #include "monty.h"
+#include <string.h>
 #include <ctype.h>
 
+/* Global variables */
+size_t stack_size = 0;
+int data_stack[STACK_MAX_SIZE];
+
+/* Function prototypes */
+int main(int argc, char *argv[]);
+void push(char *value_str, int line_number);
+void pall(void);
+
 /**
- * push - Pushes an element onto the stack
- * @value_str: String representation of the value to be pushed
- * @line_number: Line number of the push instruction in the file
+ * main - Entry point for the Monty interpreter.
+ * @argc: The number of command line arguments.
+ * @argv: An array of pointers to the arguments.
+ *
+ * Return: Always 0 on success.
  */
-void push(char *value_str, int line_number) {
-    int value;
 
-    if (!value_str) {
-        fprintf(stderr, "L%d: usage: push integer\n", line_number);
-        exit(EXIT_FAILURE);
-    }
+int main(int argc, char *argv[])
+{
+	if (argc != 2)
+	{
+		fprintf(stderr, "USAGE: monty file\n");
+		exit(EXIT_FAILURE);
+	}
 
-    /* Check for extra spaces before/after the value string */
-    char *trimmed_value_str = value_str;
+	FILE *file = fopen(argv[1], "r");
 
-    while (*trimmed_value_str == '\t')
-        trimmed_value_str++;
-    if (*trimmed_value_str == '\0') {
-        fprintf(stderr, "L%d: usage: push integer\n", line_number);
-        exit(EXIT_FAILURE);
-    }
-    for (size_t i = 0; trimmed_value_str[i]; i++) {
-        if (!isdigit(trimmed_value_str[i]) &&
-            trimmed_value_str[i] != '-' &&
-            trimmed_value_str[i] != '+') {
-            fprintf(stderr, "L%d: usage: push integer\n", line_number);
-            exit(EXIT_FAILURE);
-        }
-    }
-    value = atoi(trimmed_value_str);
+	if (!file)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
 
-    if (stack_size >= STACK_MAX_SIZE) {
-        fprintf(stderr, "Error: Stack overflow\n");
-        exit(EXIT_FAILURE);
-    }
-    data_stack[stack_size] = value;
-    stack_size++;
+	char line[100];
+	int line_number = 1;
 
-    pint(line_number);
+	while (fgets(line, sizeof(line), file))
+	{
+		char opcode[100];
+		int num_args = sscanf(line, " %s", opcode);
+
+		if (num_args == 1)
+		{
+			if (strcmp(opcode, "push") == 0)
+			{
+				char value_str[100];
+
+				if (sscanf(line, " %*s %s", value_str) == 1)
+				{
+					push(value_str, line_number);
+				} else
+				{
+					fprintf(stderr, "L%d: usage: push integer\n", line_number);
+					fclose(file);
+					exit(EXIT_FAILURE);
+				}
+			} else if (strcmp(opcode, "pall") == 0)
+			{
+				pall();
+			} else
+			{
+				fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+				fclose(file);
+				exit(EXIT_FAILURE);
+			}
+		}
+		line_number++; /* Increment line_number after each line */
+	}
+
+	fclose(file);
+	return (0);
 }
 
-/**
- * pint - Prints the value at the top of the stack
- * @line_number: Line number of the pint instruction in the file
- */
 void pint(int line_number) {
-    if (stack_size > 0) {
-        printf("%d\n", data_stack[stack_size - 1]);
-    } else {
-        fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-        exit(EXIT_FAILURE);
-    }
+	if (stack_size > 0) {
+	printf("%d\n", data_stack[stack_size - 1]);
+	} else
+	{
+	fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+	exit(EXIT_FAILURE);
 }
-
-/**
- * pall - Prints all elements in the stack
- */
-void pall(void) {
-    for (size_t i = stack_size; i > 0; i--) {
-        printf("%d\n", data_stack[i - 1]);
-    }
 }
 
