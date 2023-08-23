@@ -11,7 +11,14 @@ int main(int argc, char *argv[]);
 void push(char *value_str, int line_number);
 void pall(void);
 
-/* Main function */
+/**
+ * main - Entry point for the Monty interpreter.
+ * @argc: The number of command line arguments.
+ * @argv: An array of pointers to the arguments.
+ *
+ * Return: Always 0 on success.
+ */
+
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         fprintf(stderr, "USAGE: monty file\n");

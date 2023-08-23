@@ -3,50 +3,63 @@
 
 /**
  * push - Pushes an element onto the stack.
- * @value_str: The string representation of the value to push.
- * @line_number: The current line number in the file.
+ * @value_str: The string containing the value to be pushed.
+ * @line_number: The line number in the Monty file.
+ *
+ * Description: This function takes a string representing a value and pushes it
+ * onto the stack. If the value is not a valid integer, it prints an error
+ * message and exits.
  */
-/* Function to push an element onto the stack */
-void push(char *value_str, int line_number) {
-    int value;
 
-    if (!value_str) {
-        fprintf(stderr, "L%d: usage: push integer\n", line_number);
-        exit(EXIT_FAILURE);
-    }
+void push(char *value_str, int line_number)
+{
+	int value;
 
-    /* Check for extra spaces before/after the value string */
-    char *trimmed_value_str = value_str;
-    while (*trimmed_value_str == ' ')
-        trimmed_value_str++;
+	if (!value_str)
+	{
+	fprintf(stderr, "L%d: usage: push integer\n", line_number);
+	exit(EXIT_FAILURE);
+}
 
-    if (*trimmed_value_str == '\0') {
-        fprintf(stderr, "L%d: usage: push integer\n", line_number);
-        exit(EXIT_FAILURE);
-    }
+	/* Check for extra spaces before/after the value string */
+	char *trimmed_value_str = value_str;
 
-    for (size_t i = 0; trimmed_value_str[i]; i++) {
-        if (!isdigit(trimmed_value_str[i]) && trimmed_value_str[i] != '-' && trimmed_value_str[i] != '+') {
-            fprintf(stderr, "L%d: usage: push integer\n", line_number);
-            exit(EXIT_FAILURE);
-        }
-    }
+	while (*trimmed_value_str == ' ')
+	trimmed_value_str++;
 
-    value = atoi(trimmed_value_str);
+	if (*trimmed_value_str == '\0')
+{
+	fprintf(stderr, "L%d: usage: push integer\n", line_number);
+	exit(EXIT_FAILURE);
+}
 
-    if (stack_size >= STACK_MAX_SIZE) {
-        fprintf(stderr, "Error: Stack overflow\n");
-        exit(EXIT_FAILURE);
-    }
+	for (size_t i = 0; trimmed_value_str[i]; i++)
+{
+	if (!isdigit(trimmed_value_str[i]) && trimmed_value_str[i] != '-' && trimmed_value_str[i] != '+')
+	{
+	fprintf(stderr, "L%d: usage: push integer\n", line_number);
+	exit(EXIT_FAILURE);
+}
+}
 
-    data_stack[stack_size] = value;
-    stack_size++;
+	value = atoi(trimmed_value_str);
+
+	if (stack_size >= STACK_MAX_SIZE)
+{
+	fprintf(stderr, "Error: Stack overflow\n");
+	exit(EXIT_FAILURE);
+}
+
+	data_stack[stack_size] = value;
+	stack_size++;
 }
 
 /* Function to print all elements in the stack */
-void pall(void) {
-    for (size_t i = stack_size; i > 0; i--) {
-        printf("%d\n", data_stack[i - 1]);
-    }
+void pall(void)
+{
+	for (size_t i = stack_size; i > 0; i--)
+{
+	printf("%d\n", data_stack[i - 1]);
+}
 }
 
