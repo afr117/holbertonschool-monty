@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define STACK_MAX_SIZE 1024
+#define STACK_MAX_SIZE 1025
 
 extern size_t stack_size;
 extern int data_stack[STACK_MAX_SIZE];
