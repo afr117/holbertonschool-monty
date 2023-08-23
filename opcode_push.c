@@ -1,6 +1,6 @@
 #include "monty.h"
-#include <string.h>
 #include <ctype.h>
+
 
 void push(char *value_str, int line_number) {
     int value;
@@ -20,10 +20,11 @@ void push(char *value_str, int line_number) {
         exit(EXIT_FAILURE);
     }
 
-    // Only allow "0" and "1" as valid values
-    if (strcmp(trimmed_value_str, "0") != 0 && strcmp(trimmed_value_str, "1") != 0) {
-        fprintf(stderr, "L%d: usage: push integer\n", line_number);
-        exit(EXIT_FAILURE);
+    for (size_t i = 0; trimmed_value_str[i]; i++) {
+        if (!isdigit(trimmed_value_str[i]) && trimmed_value_str[i] != '-' && trimmed_value_str[i] != '+') {
+            fprintf(stderr, "L%d: usage: push integer\n", line_number);
+            exit(EXIT_FAILURE);
+        }
     }
 
     value = atoi(trimmed_value_str);

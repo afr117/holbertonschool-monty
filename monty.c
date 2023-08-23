@@ -22,13 +22,11 @@ int main(int argc, char *argv[]) {
 
     while (fgets(line, sizeof(line), file)) {
         char opcode[100];
-        char value_str[100]; // New variable to store the value
-        int num_args = sscanf(line, " %s %s", opcode, value_str); // Read both opcode and value
-
-        if (num_args >= 1) {
+        int num_args = sscanf(line, " %s", opcode);
+        if (num_args == 1) {
             if (strcmp(opcode, "push") == 0) {
-                // Check if value_str is not empty
-                if (num_args == 2 && strlen(value_str) > 0) {
+                char value_str[100];
+                if (sscanf(line, " %*s %s", value_str) == 1) {
                     push(value_str, line_number);
                 } else {
                     fprintf(stderr, "L%d: usage: push integer\n", line_number);
