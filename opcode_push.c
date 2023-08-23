@@ -6,6 +6,7 @@
  * @value_str: The string representation of the value to push.
  * @line_number: The current line number in the file.
  */
+/* Function to push an element onto the stack */
 void push(char *value_str, int line_number) {
     int value;
 
@@ -14,7 +15,7 @@ void push(char *value_str, int line_number) {
         exit(EXIT_FAILURE);
     }
 
-    // Check for extra spaces before/after the value string
+    /* Check for extra spaces before/after the value string */
     char *trimmed_value_str = value_str;
     while (*trimmed_value_str == ' ')
         trimmed_value_str++;
@@ -40,5 +41,12 @@ void push(char *value_str, int line_number) {
 
     data_stack[stack_size] = value;
     stack_size++;
+}
+
+/* Function to print all elements in the stack */
+void pall(void) {
+    for (size_t i = stack_size; i > 0; i--) {
+        printf("%d\n", data_stack[i - 1]);
+    }
 }
 

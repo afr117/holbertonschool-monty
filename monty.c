@@ -2,9 +2,16 @@
 #include <string.h>
 #include <ctype.h>
 
+/* Global variables */
 size_t stack_size = 0;
 int data_stack[STACK_MAX_SIZE];
 
+/* Function prototypes */
+int main(int argc, char *argv[]);
+void push(char *value_str, int line_number);
+void pall(void);
+
+/* Main function */
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         fprintf(stderr, "USAGE: monty file\n");
@@ -47,4 +54,3 @@ int main(int argc, char *argv[]) {
     fclose(file);
     return (0);
 }
-
