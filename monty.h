@@ -22,7 +22,7 @@ extern StackNode *stack;
 
 /* Function prototypes */
 void push(char *value_str, int line_number);
-void pint(int line_number);
+void pint(int line_number); /* Prints the value at the top of the stack */
 void pall(void);
 
 #endif /* MONTY_H */

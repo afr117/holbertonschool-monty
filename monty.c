@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 	return (0);
 }
 
-void pint(int line_number) /* Prints the value at the top of the stack */
+void pint(int line_number) 
 {
 	if (stack_size > 0)
 {
