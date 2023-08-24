@@ -56,7 +56,8 @@ int main(int argc, char *argv[])
 }
 	} else if (strcmp(opcode, "pall") == 0)
 {
-	pall		} else
+ pall ();		
+} else
 {
 	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 	fclose(file);
