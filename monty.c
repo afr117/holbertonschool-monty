@@ -3,7 +3,7 @@
 #include <ctype.h>
 
 size_t stack_size = 0;
-int data_stack[STACK_MAX_SIZE];
+int data_stack[STACK_MAX_SIZE] = { -1 } ;
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
