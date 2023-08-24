@@ -83,12 +83,11 @@ int main(int argc, char *argv[])
  * pop - Removes the top element of the stack.
  * @line_number: Line number of the pop instruction in the file.
  */
-void pop(int line_number)
+void pop(void)
 {
     if (stack == NULL)
     {
-        fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
-        exit(EXIT_FAILURE);
+        return; // Do nothing if the stack is empty
     }
 
     StackNode *temp = stack; // Create a temporary pointer to the current top node
