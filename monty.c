@@ -95,6 +95,11 @@ void pop(int line_number)
     stack = stack->next; // Move stack pointer to the next node
     free(temp); // Free the memory of the removed node
     stack_size--;
+
+    if (stack_size < STACK_MAX_SIZE)
+    {
+        data_stack[stack_size] = 0;
+    }
 }
 
 
