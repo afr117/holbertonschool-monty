@@ -4,18 +4,13 @@ size_t stack_size = 0;
 int data_stack[STACK_MAX_SIZE] = { -1 };
 StackNode *stack = NULL;
 
-void execute_instruction(char *opcode, char *arg, int line_number) {
-    if (strcmp(opcode, "push") == 0) {
-        if (*arg != '\0') {
-            push(arg, line_number);
-        } else {
-            fprintf(stderr, "L%d: usage: push integer\n", line_number);
-            exit(EXIT_FAILURE);
-        }
-    } else if (strcmp(opcode, "pall") == 0) {
-        pall();
+void execute_instruction(FILE *file, int line_number, char *opcode, char *arg);
+
+void push_or_exit(FILE *file, int line_number, char *arg) {
+    if (num_args == 2) {
+        push(arg, line_number);
     } else {
-        fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+        fprintf(stderr, "L%d: usage: push integer\n", line_number);
         fclose(file);
         exit(EXIT_FAILURE);
     }
@@ -42,7 +37,7 @@ int main(int argc, char *argv[]) {
         int num_args = sscanf(line, " %s %s", opcode, arg);
 
         if (num_args >= 1) {
-            execute_instruction(opcode, arg, line_number);
+            execute_instruction(file, line_number, opcode, arg);
         }
 
         line_number++;
@@ -50,5 +45,17 @@ int main(int argc, char *argv[]) {
 
     fclose(file);
     return 0;
+}
+
+void execute_instruction(FILE *file, int line_number, char *opcode, char *arg) {
+    if (strcmp(opcode, "push") == 0) {
+        push_or_exit(file, line_number, arg);
+    } else if (strcmp(opcode, "pall") == 0) {
+        pall();
+    } else {
+        fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+        fclose(file);
+        exit(EXIT_FAILURE);
+    }
 }
 
