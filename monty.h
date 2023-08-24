@@ -1,9 +1,12 @@
+#ifndef MONTY_H
+#define MONTY_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
 #define STACK_MAX_SIZE 3000
+
 /* Data structure for the stack */
 typedef struct StackNode {
     int data;
@@ -12,13 +15,12 @@ typedef struct StackNode {
 
 extern size_t stack_size;
 extern int data_stack[STACK_MAX_SIZE];
-/* Global variable for the stack */
-extern StackNode *stack;
+extern StackNode *stack; // You can declare the stack here if needed
 
-void push(char *value_str, int line_number);
 /* Function prototypes */
-void push(int value);
-void pall(void);
+void push(char *value_str, int line_number);
 void pint(int line_number);
+void pall(void);
 
 #endif /* MONTY_H */
+
