@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
+
 
 #define STACK_MAX_SIZE 3000
 
@@ -15,7 +18,7 @@ typedef struct StackNode {
 
 extern size_t stack_size;
 extern int data_stack[STACK_MAX_SIZE];
-extern StackNode *stack; // You can declare the stack here if needed
+extern StackNode *stack;
 
 /* Function prototypes */
 void push(char *value_str, int line_number);
