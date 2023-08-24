@@ -1,6 +1,44 @@
 #include "monty.h"
 
 /**
+ * pint - Prints the value at the top of the stack.
+ * @line_number: Line number of the pint instruction in the file.
+ */
+void pint(int line_number)
+{
+    if (stack == NULL)
+    {
+        fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("%d\n", stack->n);
+}
+
+/**
+ * pop - Removes the top element of the stack.
+ * @line_number: Line number of the pop instruction in the file.
+ */
+void pop(int line_number)
+{
+    if (stack == NULL)
+    {
+        fprintf(stderr, "L%d: can't pop an empty stack\n", line_number); // Print error message for pop
+        exit(EXIT_FAILURE);
+    }
+
+    StackNode *temp = stack; // Create a temporary pointer to the current top node
+    stack = stack->next; // Move stack pointer to the next node
+    free(temp); // Free the memory of the removed node
+    stack_size--;
+
+    if (stack_size < STACK_MAX_SIZE)
+    {
+        data_stack[stack_size] = 0;
+    }
+}
+
+/**
  * main - Entry point for Monty interpreter.
  * @argc: Number of command-line arguments.
  * @argv: Array of command-line argument strings.
@@ -60,6 +98,10 @@ int main(int argc, char *argv[])
             {
                 pint(line_number); // Call the pint function
             }
+            else if (strcmp(opcode, "pop") == 0)
+            {
+                pop(line_number); // Call the pop function with line_number as argument
+            }
             else if (strcmp(opcode, "pall") == 0)
             {
                 pall();
@@ -83,11 +125,12 @@ int main(int argc, char *argv[])
  * pop - Removes the top element of the stack.
  * @line_number: Line number of the pop instruction in the file.
  */
-void pop(void)
+void pop(int line_number)
 {
     if (stack == NULL)
     {
-        return; // Do nothing if the stack is empty
+        fprintf(stderr, "L%d: can't pop an empty stack\n", line_number); // Print error message for pop
+        exit(EXIT_FAILURE);
     }
 
     StackNode *temp = stack; // Create a temporary pointer to the current top node
@@ -100,7 +143,6 @@ void pop(void)
         data_stack[stack_size] = 0;
     }
 }
-
 
 /**
  * pint - Prints the value at the top of the stack
@@ -118,3 +160,4 @@ void pint(int line_number)
         exit(EXIT_FAILURE);
     }
 }
+
