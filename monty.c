@@ -75,10 +75,13 @@ int main(int argc, char *argv[])
 	return (0);
 }
 
-void pint(int line_number) {
-	if (stack_size > 0) {
+void pint(int line_number)
+{
+	if (stack_size > 0)
+{
 	printf("%d\n", data_stack[stack_size - 1]);
-	} else
+	}
+else
 	{
 	fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
 	exit(EXIT_FAILURE);
