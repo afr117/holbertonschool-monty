@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 	return (0);
 }
 
-void pint(int line_number) 
+void pint(int line_number)
 {
 	if (stack_size > 0)
 {
