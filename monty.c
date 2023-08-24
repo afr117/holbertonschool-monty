@@ -79,18 +79,6 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void pint(int line_number)
-{
-    if (stack_size > 0)
-    {
-        printf("%d\n", data_stack[stack_size - 1]);
-    }
-    else
-    {
-        fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-        exit(EXIT_FAILURE);
-    
-}
 
 /**
  * pop - Removes the top element of the stack
@@ -106,6 +94,23 @@ void pop(int line_number)
     else
     {
         fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+}
+
+/**
+ * pint - Prints the value at the top of the stack
+ * @line_number: Line number of the pint instruction in the file
+ */
+void pint(int line_number)
+{
+    if (stack_size > 0)
+    {
+        printf("%d\n", stack->data);
+    }
+    else
+    {
+        fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
         exit(EXIT_FAILURE);
     }
 }
