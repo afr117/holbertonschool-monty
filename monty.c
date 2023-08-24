@@ -75,6 +75,11 @@ int main(int argc, char *argv[])
 	return (0);
 }
 
+/**
+ * pint - Prints the value at the top of the stack.
+ * @line_number: Line number of the pint instruction in the file.
+ */
+
 void pint(int line_number)
 {
 	if (stack_size > 0)
