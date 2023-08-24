@@ -54,7 +54,10 @@ void pint(int line_number) {
         fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
         exit(EXIT_FAILURE);
     }
+      fflush(stdout);
 }
+
+
 
 /**
  * pall - Prints all elements in the stack
@@ -64,3 +67,4 @@ void pall(void) {
         printf("%d\n", data_stack[i - 1]);
     }
 }
+
