@@ -1,59 +1,7 @@
 #include "monty.h"
 
-/**
- * pint - Prints the value at the top of the stack.
- * @line_number: Line number of the pint instruction in the file.
- */
-void pint(int line_number)
-{
-    if (stack_size > 0)
-    {
-        printf("%d\n", stack->data);
-    }
-    else
-    {
-        fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-        exit(EXIT_FAILURE);
-    }
-}
-
-/**
- * pop - Removes the top element of the stack.
- * @line_number: Line number of the pop instruction in the file.
- */
-void pop(int line_number)
-{
-    if (stack == NULL)
-    {
-        fprintf(stderr, "L%d: can't pop an empty stack\n", line_number); // Print error message for pop
-        exit(EXIT_FAILURE);
-    }
-
-    StackNode *temp = stack; // Create a temporary pointer to the current top node
-    stack = stack->next; // Move stack pointer to the next node
-    free(temp); // Free the memory of the removed node
-    stack_size--;
-
-    if (stack_size < STACK_MAX_SIZE)
-    {
-        data_stack[stack_size] = 0;
-    }
-}
-
-/**
- * main - Entry point for Monty interpreter.
- * @argc: Number of command-line arguments.
- * @argv: Array of command-line argument strings.
- *
- * This function reads and interprets Monty bytecode from file.
- * Parses Monty instructions and executes accordingly.
- *
- * Return: 0 on success, EXIT_FAILURE on failure.
- */
-
 size_t stack_size = 0;
 int data_stack[STACK_MAX_SIZE] = { -1 };
-
 StackNode *stack = NULL;
 
 int main(int argc, char *argv[])
@@ -121,5 +69,78 @@ int main(int argc, char *argv[])
 
     fclose(file);
     return 0;
+}
+
+/**
+ * pint - Prints the value at the top of the stack.
+ * @line_number: Line number of the pint instruction in the file.
+ */
+void pint(int line_number)
+{
+    if (stack == NULL)
+    {
+        fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("%d\n", stack->n);
+}
+
+/**
+ * pop - Removes the top element of the stack.
+ * @line_number: Line number of the pop instruction in the file.
+ */
+void pop(int line_number)
+{
+    if (stack == NULL)
+    {
+        fprintf(stderr, "L%d: can't pop an empty stack\n", line_number); // Print error message for pop
+        exit(EXIT_FAILURE);
+    }
+
+    StackNode *temp = stack; // Create a temporary pointer to the current top node
+    stack = stack->next; // Move stack pointer to the next node
+    free(temp); // Free the memory of the removed node
+    stack_size--;
+
+    if (stack_size < STACK_MAX_SIZE)
+    {
+        data_stack[stack_size] = 0;
+    }
+}
+
+/**
+ * push - Pushes an element onto the stack.
+ * @value_str: String representation of the value to push.
+ * @line_number: Line number of the push instruction in the file.
+ */
+void push(char *value_str, int line_number)
+{
+    // Convert the value string to an integer
+    int value = atoi(value_str);
+
+    // Check if the stack is already full
+    if (stack_size >= STACK_MAX_SIZE)
+    {
+        fprintf(stderr, "L%d: can't push, stack overflow\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
+    // Create a new node and set its value
+    StackNode *new_node = malloc(sizeof(StackNode));
+    if (!new_node)
+    {
+        fprintf(stderr, "Error: malloc failed\n");
+        exit(EXIT_FAILURE);
+    }
+    new_node->n = value;
+
+    // Link the new node to the current top of the stack
+    new_node->next = stack;
+    stack = new_node;
+
+    // Update the data stack
+    data_stack[stack_size] = value;
+    stack_size++;
 }
 
