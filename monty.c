@@ -11,6 +11,17 @@ int main(int argc, char *argv[]);
 void push(char *value_str, int line_number);
 void pall(void);
 
+void pint(int line_number) {
+	if (stack_size > 0) {
+	printf("%d\n", stack->data);
+   }
+    else
+    {
+	fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+	exit(EXIT_FAILURE);
+	}
+}
+
 /**
  * main - Entry point for the Monty interpreter.
  * @argc: The number of command line arguments.
@@ -80,16 +91,4 @@ int main(int argc, char *argv[])
  * @line_number: Line number of the pint instruction in the file.
  */
 
-void pint(int line_number)
-{
-	if (stack_size > 0)
-{
-	printf("%d\n", data_stack[stack_size - 1]);
-	}
-else
-	{
-	fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-	exit(EXIT_FAILURE);
-}
-}
 
