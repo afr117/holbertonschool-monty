@@ -56,14 +56,15 @@ int main(int argc, char *argv[])
 }
 	} else if (strcmp(opcode, "pall") == 0)
 {
-	pall();
-	} else
-{ fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-	fclose(file);	exit(EXIT_FAILURE);
-}
-}
-	line_number++;
-}
+	pall		} else
+{
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 	fclose(file);
-	return 0;
+	exit(EXIT_FAILURE);
+}
+}
+line_number++;
+}
+fclose(file);
+return 0;
 }
