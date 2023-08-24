@@ -1,5 +1,16 @@
 #include "monty.h"
 
+/**
+ * main - Entry point for the Monty interpreter.
+ * @argc: Number of command-line arguments.
+ * @argv: Array of command-line argument strings.
+ *
+ * This function reads and interprets Monty bytecode from a file.
+ * It parses Monty instructions and executes them accordingly.
+ *
+ * Return: 0 on success, EXIT_FAILURE on failure.
+ */
+
 size_t stack_size = 0;
 int data_stack[STACK_MAX_SIZE] = { -1 };
 StackNode *stack = NULL; // You need to initialize stack to NULL
