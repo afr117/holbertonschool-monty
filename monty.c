@@ -80,24 +80,23 @@ int main(int argc, char *argv[])
 }
 
 /**
- * pop - Removes the top element of the stack
- * @line_number: Line number of the pop instruction in the file
+ * pop - Removes the top element of the stack.
+ * @line_number: Line number of the pop instruction in the file.
  */
 void pop(int line_number)
 {
-    if (stack_size > 0)
-    {
-        stack_size--;
-        StackNode *temp = stack; // Create a temporary pointer to the current top node
-        stack = stack->next; // Move stack pointer to the next node
-        free(temp); // Free the memory of the removed node
-    }
-    else
+    if (stack == NULL)
     {
         fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
         exit(EXIT_FAILURE);
     }
+
+    StackNode *temp = stack; // Create a temporary pointer to the current top node
+    stack = stack->next; // Move stack pointer to the next node
+    free(temp); // Free the memory of the removed node
+    stack_size--;
 }
+
 
 /**
  * pint - Prints the value at the top of the stack
