@@ -2,7 +2,6 @@
 #include <string.h>
 #include <ctype.h>
 
-
 size_t stack_size = 0;
 int data_stack[STACK_MAX_SIZE];
 
@@ -23,13 +22,13 @@ int main(int argc, char *argv[]) {
 
     while (fgets(line, sizeof(line), file)) {
         char opcode[100];
-        int num_args = sscanf(line, " %s", opcode);
+        char arg[100];
+        int num_args = sscanf(line, " %s %s", opcode, arg);
 
-        if (num_args == 1) {
+        if (num_args >= 1) {
             if (strcmp(opcode, "push") == 0) {
-                char value_str[100];
-                if (sscanf(line, " %*s %s", value_str) == 1) {
-                    push(value_str, line_number);
+                if (num_args == 2) {
+                    push(arg, line_number);
                 } else {
                     fprintf(stderr, "L%d: usage: push integer\n", line_number);
                     fclose(file);
