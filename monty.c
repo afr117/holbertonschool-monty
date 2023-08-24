@@ -1,87 +1,64 @@
-#include "monty.h"
+ #include "monty.h"
 #include <string.h>
 #include <ctype.h>
 
-/* Global variables */
 size_t stack_size = 0;
-int data_stack[STACK_MAX_SIZE];
+int data_stack[STACK_MAX_SIZE] = { -1 } ;
 
-/* Function prototypes */
-int main(int argc, char *argv[]);
-void push(char *value_str, int line_number);
-void pall(void);
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        fprintf(stderr, "USAGE: monty file\n");
+        exit(EXIT_FAILURE);
+    }
 
-/**
- * main - Entry point for the Monty interpreter.
- * @argc: The number of command line arguments.
- * @argv: An array of pointers to the arguments.
- *
- * Return: Always 0 on success.
- */
+    FILE *file = fopen(argv[1], "r");
+    if (!file) {
+        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+        exit(EXIT_FAILURE);
+    }
 
-int main(int argc, char *argv[])
-{
-	if (argc != 2)
-	{
-		fprintf(stderr, "USAGE: monty file\n");
-		exit(EXIT_FAILURE);
-	}
+    char line[100];
+    int line_number = 1;
 
-	FILE *file = fopen(argv[1], "r");
+    while (fgets(line, sizeof(line), file)) {
+        char *token = strtok(line, " \t\n"); // Tokenize the line
 
-	if (!file)
-	{
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
-	}
+        while (token != NULL) {
+            char opcode[100];
+            char arg[100];
+            strcpy(opcode, token);
 
-	char line[100];
-	int line_number = 1;
+            token = strtok(NULL, " \t\n"); // Get the next token
+            if (token != NULL) {
+                strcpy(arg, token);
+            } else {
+                arg[0] = '\0';
+            }
 
-	while (fgets(line, sizeof(line), file))
-	{
-		char opcode[100];
-		int num_args = sscanf(line, " %s", opcode);
+            if (strcmp(opcode, "push") == 0) {
+                if (strlen(arg) > 0) {
+                    push(arg, line_number);
+                } else {
+                    fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                    fclose(file);
+                    exit(EXIT_FAILURE);
+                }
+            } else if (strcmp(opcode, "pint") == 0) {
+                pint(line_number);
+            } else if (strcmp(opcode, "pall") == 0) {
+                pall();
+            } else {
+                fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+                fclose(file);
+                exit(EXIT_FAILURE);
+            }
 
-		if (num_args == 1)
-		{
-			if (strcmp(opcode, "push") == 0)
-			{
-				char value_str[100];
+            token = strtok(NULL, " \t\n"); // Get the next token
+        }
 
-				if (sscanf(line, " %*s %s", value_str) == 1)
-				{
-					push(value_str, line_number);
-				} else
-				{
-					fprintf(stderr, "L%d: usage: push integer\n", line_number);
-					fclose(file);
-					exit(EXIT_FAILURE);
-				}
-			} else if (strcmp(opcode, "pall") == 0)
-			{
-				pall();
-			} else
-			{
-				fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-				fclose(file);
-				exit(EXIT_FAILURE);
-			}
-		}
-		line_number++; /* Increment line_number after each line */
-	}
+        line_number++;
+    }
 
-	fclose(file);
-	return (0);
+    fclose(file);
+    return 0;
 }
-
-void pint(int line_number) {
-	if (stack_size > 0) {
-	printf("%d\n", data_stack[stack_size - 1]);
-	} else
-	{
-	fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-	exit(EXIT_FAILURE);
-}
-}
-
