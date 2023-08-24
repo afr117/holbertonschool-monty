@@ -6,13 +6,15 @@
  */
 void pint(int line_number)
 {
-    if (stack == NULL)
+    if (stack_size > 0)
+    {
+        printf("%d\n", stack->data);
+    }
+    else
     {
         fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
         exit(EXIT_FAILURE);
     }
-
-    printf("%d\n", stack->n);
 }
 
 /**
@@ -119,45 +121,5 @@ int main(int argc, char *argv[])
 
     fclose(file);
     return 0;
-}
-
-/**
- * pop - Removes the top element of the stack.
- * @line_number: Line number of the pop instruction in the file.
- */
-void pop(int line_number)
-{
-    if (stack == NULL)
-    {
-        fprintf(stderr, "L%d: can't pop an empty stack\n", line_number); // Print error message for pop
-        exit(EXIT_FAILURE);
-    }
-
-    StackNode *temp = stack; // Create a temporary pointer to the current top node
-    stack = stack->next; // Move stack pointer to the next node
-    free(temp); // Free the memory of the removed node
-    stack_size--;
-
-    if (stack_size < STACK_MAX_SIZE)
-    {
-        data_stack[stack_size] = 0;
-    }
-}
-
-/**
- * pint - Prints the value at the top of the stack
- * @line_number: Line number of the pint instruction in the file
- */
-void pint(int line_number)
-{
-    if (stack_size > 0)
-    {
-        printf("%d\n", stack->data);
-    }
-    else
-    {
-        fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-        exit(EXIT_FAILURE);
-    }
 }
 
