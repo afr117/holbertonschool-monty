@@ -13,14 +13,20 @@ typedef struct StackNode
     struct StackNode *next;
 } StackNode;
 
+typedef struct opcode_s
+{
+    char *opcode;
+    void (*f)(StackNode **stack, unsigned int line_number); // Change the function signature
+} opcode_t;
+
+void push(StackNode **stack, unsigned int line_number);
+void pall(StackNode **stack, unsigned int line_number);
+void pint(StackNode **stack, unsigned int line_number);
+void pop(StackNode **stack, unsigned int line_number);
+void swap(StackNode **stack, unsigned int line_number);
+
 extern size_t stack_size;
 extern int data_stack[STACK_MAX_SIZE];
 extern StackNode *stack;
 
-void push(char *value_str, int line_number);
-void pint(int line_number);
-void pop(int line_number);
-void pall(void);
-
 #endif /* MONTY_H */
-
