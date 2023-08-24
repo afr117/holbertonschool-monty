@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 	if (num_args == 2)
 {
 	push(arg, line_number);
-} else	
+} else
 {
 	fprintf(stderr, "L%d: usage: push integer\n", line_number);
 					fclose(file);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 {
 	pall();
 	} else
-{
+	{
 	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 	fclose(file);	exit(EXIT_FAILURE);
 }
