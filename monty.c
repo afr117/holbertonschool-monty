@@ -91,4 +91,15 @@ void pint(int line_number)
         exit(EXIT_FAILURE);
     }
 }
-
+void pop(int line_number)
+{
+    if (stack_size > 0)
+    {
+        stack_size--;
+    }
+    else
+    {
+        fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+}
