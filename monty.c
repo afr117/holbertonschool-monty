@@ -6,7 +6,7 @@ StackNode *stack = NULL;
 
 void execute_instruction(FILE *file, int line_number, char *opcode, char *arg);
 
-void push_or_exit(FILE *file, int line_number, char *arg) {
+void push_or_exit(FILE *file, int line_number, char *arg, int num_args) {
     if (num_args == 2) {
         push(arg, line_number);
     } else {
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 
 void execute_instruction(FILE *file, int line_number, char *opcode, char *arg) {
     if (strcmp(opcode, "push") == 0) {
-        push_or_exit(file, line_number, arg);
+        push_or_exit(file, line_number, arg, num_args);
     } else if (strcmp(opcode, "pall") == 0) {
         pall();
     } else {
