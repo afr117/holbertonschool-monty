@@ -103,3 +103,21 @@ void pop(int line_number)
         exit(EXIT_FAILURE);
     }
 }
+
+/**
+ * pop - Removes the top element of the stack
+ * @line_number: Line number of the pop instruction in the file
+ */
+void pop(int line_number)
+{
+    if (stack_size > 0)
+    {
+        stack_size--;
+        data_stack[stack_size] = 0; // Clear the element at the top of the stack
+    }
+    else
+    {
+        fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+}
