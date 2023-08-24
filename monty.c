@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 	fclose(file);
 	return (0);
 }
-
+/* Prints the value at the top of the stack */
 void pint(int line_number)
 {
 	if (stack_size > 0)
