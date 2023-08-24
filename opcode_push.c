@@ -57,8 +57,6 @@ void pint(int line_number) {
       fflush(stdout);
 }
 
-
-
 /**
  * pall - Prints all elements in the stack
  */
