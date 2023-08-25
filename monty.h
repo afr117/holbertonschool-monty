@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
+#include <stddef.h>
 
 #define STACK_MAX_SIZE 3000
 
