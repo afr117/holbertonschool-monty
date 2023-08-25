@@ -5,12 +5,8 @@ void pall(void)
     StackNode *current = stack;
     while (current != NULL)
     {
-        printf("%d", current->data); // Print the value without newline
+        printf("%d\n", current->data);
         current = current->next;
-
-        if (current != NULL)
-            printf("\n"); // Add newline after each value except the last one
     }
-    printf("\n"); // Add a final newline after printing all values
 }
 
