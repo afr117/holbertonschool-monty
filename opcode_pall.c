@@ -6,7 +6,6 @@ void pall(void)
     StackNode *current = stack;
     while (current != NULL)
     {
-        printf("%d\n", current->data); // Add this line for debugging
         printf("%d\n", current->data);
         current = current->next;
     }
