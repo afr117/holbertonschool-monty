@@ -7,6 +7,8 @@ StackNode *stack = NULL;
 
 int main(int argc, char *argv[])
 {
+	init_stack();
+
     if (argc != 2)
     {
         fprintf(stderr, "Usage: monty file\n");
