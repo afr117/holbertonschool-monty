@@ -3,9 +3,11 @@
 void pall(void) {
     StackNode *current = stack;
 
-    while (current != NULL) {
-        printf("%d\n", current->data);
-        current = current->next;
+    while (current != NULL)
+    {
+	printf("Stack value: %d\n", current->data);
+	printf("%d\n", current->data);
+	current = current->next;
     }
 }
 
