@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "monty.h"
 
+StackNode *stack = NULL;
+
 void pall(void)
 {
     StackNode *current = stack;
