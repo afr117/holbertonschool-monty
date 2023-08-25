@@ -1,14 +1,16 @@
 #include "monty.h"
-#include <stdio.h>
 
 void pall(void)
 {
     StackNode *current = stack;
     while (current != NULL)
     {
-        printf("Stack value: %d\n", current->data); // Add this line for debugging
-        printf("%d\n", current->data);
+        printf("%d", current->data); // Print the value without newline
         current = current->next;
+
+        if (current != NULL)
+            printf("\n"); // Add newline after each value except the last one
     }
+    printf("\n"); // Add a final newline after printing all values
 }
 
