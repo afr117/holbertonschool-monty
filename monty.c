@@ -3,63 +3,40 @@
 size_t stack_size = 0;
 StackNode *stack = NULL;
 
-/**
- * main - Entry point for Monty interpreter.
- * @argc: Number of command-line arguments.
- * @argv: Array of command-line argument strings.
- *
- * This function reads and interprets Monty bytecode from file.
- * Parses Monty instructions and executes accordingly.
- *
- * Return: 0 on success, EXIT_FAILURE on failure.
- */
+#include "monty.h"
 
-int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "USAGE: monty file\n");
+int main(int argc, char *argv[])
+{
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: monty file\n");
         exit(EXIT_FAILURE);
     }
 
     FILE *file = fopen(argv[1], "r");
-
-    if (!file) {
+    if (file == NULL)
+    {
         fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
         exit(EXIT_FAILURE);
     }
 
-    char line[100];
-    int line_number = 1;
+    // Initialize your stack and any other necessary variables here
+    init_stack();
 
-    while (fgets(line, sizeof(line), file)) {
-        char opcode[100];
-        char arg[100];
-        int num_args = sscanf(line, " %s %s", opcode, arg);
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
 
-        if (num_args >= 1) {
-            if (strcmp(opcode, "push") == 0) {
-                if (num_args == 2) {
-                    push(arg, line_number);
-                } else {
-                    fprintf(stderr, "L%d: usage: push integer\n", line_number);
-                    fclose(file);
-                    exit(EXIT_FAILURE);
-                }
-            } else if (strcmp(opcode, "pint") == 0) {
-                pint(line_number);
-            } else if (strcmp(opcode, "pop") == 0) {
-                pop(line_number);
-            } else if (strcmp(opcode, "pall") == 0) {
-                pall();
-            } else {
-                fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-                fclose(file);
-                exit(EXIT_FAILURE);
-            }
-        }
-
-        line_number++;
+    while ((read = getline(&line, &len, file)) != -1)
+    {
+        // Process the line, parse opcodes, and execute corresponding functions
+        process_line(line);
     }
 
+    // Free any allocated memory and close the file
+    free(line);
     fclose(file);
-    return 0;
+
+    return EXIT_SUCCESS;
 }
+
