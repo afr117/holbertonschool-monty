@@ -1,6 +1,5 @@
 #include "monty.h"
 
-StackNode *stack = NULL;
 
 void pop(int line_number) {
     if (stack == NULL) {
