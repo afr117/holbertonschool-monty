@@ -1,9 +1,9 @@
 #include "monty.h"
+#include <stdio>
 
 size_t stack_size = 0;
 StackNode *stack = NULL;
 
-#include "monty.h"
 
 int main(int argc, char *argv[])
 {
