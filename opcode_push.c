@@ -2,7 +2,6 @@
 
 int data_stack[STACK_MAX_SIZE];
 
-StackNode *stack = NULL;
 
 /**
  * push - Pushes an element onto the stack

@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 size_t stack_size = 0;
-StackNode *stack = NULL;
 
 
 int main(int argc, char *argv[])
