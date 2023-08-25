@@ -1,40 +1,32 @@
 #include "monty.h"
-#include <ctype.h>
 
-/**
- * find_opcode - Finds the corresponding function for an opcode.
- * @opcode: The opcode to find.
- *
- * Return: A pointer to the corresponding function, or NULL if not found.
- */
-void (*find_opcode(char *opcode))(StackNode **, unsigned int)
-{
-    opcode_t opcodes[] = {
-        {"push", push},
-        {"pall", pall},
-        {"pint", pint},
-        {"pop", pop},
-        {"swap", swap},
-        {NULL, NULL}
-    };
+void push(char *value_str, int line_number) {
+    int value;
 
-    int i = 0;
-    while (opcodes[i].opcode != NULL)
-    {
-        if (strcmp(opcodes[i].opcode, opcode) == 0)
-            return opcodes[i].f;
-        i++;
+    if (!value_str) {
+        fprintf(stderr, "L%d: usage: push integer\n", line_number);
+        exit(EXIT_FAILURE);
     }
-    return NULL;
+
+    for (size_t i = 0; value_str[i]; i++) {
+        if (!isdigit(value_str[i]) && value_str[i] != '-' && value_str[i] != '+') {
+            fprintf(stderr, "L%d: usage: push integer\n", line_number);
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    value = atoi(value_str);
+
+    StackNode *new_node = malloc(sizeof(StackNode));
+    if (!new_node) {
+        fprintf(stderr, "Error: Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    new_node->data = value;
+    new_node->next = stack;
+    stack = new_node;
+
+    stack_size++;
 }
 
-
-void push(StackNode **stack, unsigned int line_number);
-
-void pint(StackNode **stack, unsigned int line_number);
-
-void pop(StackNode **stack, unsigned int line_number);
-
-void pall(StackNode **stack, unsigned int line_number);
-
-void swap(StackNode **stack, unsigned int line_number);
