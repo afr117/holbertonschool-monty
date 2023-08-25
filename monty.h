@@ -7,7 +7,6 @@
 #include <string.h>
 #include <ctype.h>
 
-
 #define STACK_MAX_SIZE 3000
 
 /* Data structure for the stack */
