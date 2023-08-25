@@ -17,7 +17,14 @@ void push(char *value_str, int line_number) {
 
     value = atoi(value_str);
 
+	if (stack_size >= STACK_MAX_SIZE)
+    {
+        fprintf(stderr, "Error: Stack overflow\n");
+        exit(EXIT_FAILURE);
+    
+    }
     StackNode *new_node = malloc(sizeof(StackNode));
+
     if (!new_node) {
         fprintf(stderr, "Error: Memory allocation failed\n");
         exit(EXIT_FAILURE);
