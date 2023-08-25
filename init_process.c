@@ -8,7 +8,6 @@ void init_stack(void) {
 }
 
 void process_line(char *line) {
-    // Your implementation of processing a line here
-    // This function should handle parsing the line and executing the appropriate opcodes
+    (void)line;
 }
 
