@@ -3,29 +3,30 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
+#include <stddef.h>
 
-/**
- * struct StackNode - singly linked list representation of a stack
- * @n: integer
- * @next: points to the next node
- *
- * Description: stack node structure
- */
+#define STACK_MAX_SIZE 3000
+
+extern size_t stack_size;
+
+/* Data structure for the stack */
 typedef struct StackNode {
-    int n;
+    int data;
     struct StackNode *next;
 } StackNode;
 
-/**
- * struct Monty - struct to hold Monty interpreter data
- * @stack: pointer to the top of the stack
- */
-typedef struct {
-    StackNode *stack;
-} Monty;
+extern StackNode *stack;
+extern int data_stack[STACK_MAX_SIZE];
 
+void init_stack(void);
+void process_line(char *line);
 /* Function prototypes */
-void push(Monty *monty, int value);
-void pall(const Monty *monty);
+void push(char *value_str, int line_number);
+void pint(int line_number); /* Prints the value at the top of the stack */
+void pop(int line_number);
+void pall(void);
 
 #endif /* MONTY_H */

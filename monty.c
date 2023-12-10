@@ -1,35 +1,42 @@
 #include "monty.h"
+#include <stdio.h>
 
-/**
- * push - pushes an element onto the stack
- * @monty: pointer to the Monty interpreter
- * @value: integer value to push onto the stack
- */
-void push(Monty *monty, int value)
+size_t stack_size = 0;
+
+
+int main(int argc, char *argv[])
 {
-    StackNode *new_node = malloc(sizeof(StackNode));
-    if (new_node == NULL)
+	init_stack();
+
+    if (argc != 2)
     {
-        fprintf(stderr, "Error: malloc failed\n");
+        fprintf(stderr, "Usage: monty file\n");
         exit(EXIT_FAILURE);
     }
 
-    new_node->n = value;
-    new_node->next = monty->stack;
-    monty->stack = new_node;
-}
-
-/**
- * pall - prints all values on the stack
- * @monty: pointer to the Monty interpreter
- */
-void pall(const Monty *monty)
-{
-    StackNode *current = monty->stack;
-
-    while (current != NULL)
+    FILE *file = fopen(argv[1], "r");
+    if (file == NULL)
     {
-        printf("%d\n", current->n);
-        current = current->next;
+        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+        exit(EXIT_FAILURE);
     }
+
+    // Initialize your stack and any other necessary variables here
+    init_stack();
+
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+
+    while ((read = getline(&line, &len, file)) != -1)
+    {
+        // Process the line, parse opcodes, and execute corresponding functions
+        process_line(line);
+    }
+
+    // Free any allocated memory and close the file
+    free(line);
+    fclose(file);
+
+    return EXIT_SUCCESS;
 }
