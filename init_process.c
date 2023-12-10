@@ -1,7 +1,6 @@
 #include "monty.h"
 
-StackNode *stack = NULL; // Initialize the stack pointer//
-
+// No need to re-declare stack here
 void init_stack(void) {
     stack = NULL;
 }
@@ -9,3 +8,4 @@ void init_stack(void) {
 void process_line(char *line) {
     (void)line;
 }
+
