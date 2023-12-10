@@ -1,13 +1,11 @@
-#include <stdio.h>
 #include "monty.h"
-
+#include <stdio.h>
 
 void pall(void)
 {
-    StackNode *current = stack;
-    while (current != NULL)
+    for (size_t i = 0; i < stack_size; i++)
     {
-        printf("%d\n", current->data);
-        current = current->next;
+        printf("%d\n", data_stack[i]);
     }
 }
+

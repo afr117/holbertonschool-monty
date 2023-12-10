@@ -1,13 +1,5 @@
 #include "monty.h"
 
-int data_stack[STACK_MAX_SIZE];
-
-
-/**
- * push - Pushes an element onto the stack
- * @value_str: String representation of the value to be pushed
- * @line_number: Line number of the push instruction in the file
- */
 void push(char *value_str, int line_number)
 {
     int value;
@@ -36,3 +28,4 @@ void push(char *value_str, int line_number)
     data_stack[stack_size] = value;
     stack_size++;
 }
+
