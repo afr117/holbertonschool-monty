@@ -7,11 +7,9 @@
  */
 void pint(stack_t **stack, unsigned int line_number)
 {
-    /* Remove the unused parameters if not needed */
+    /* You need to implement this function */
     (void)stack;
     (void)line_number;
-
-    /* Rest of the function */
 }
 
 /**
@@ -21,10 +19,8 @@ void pint(stack_t **stack, unsigned int line_number)
  */
 void pop(stack_t **stack, unsigned int line_number)
 {
-    /* Remove the unused parameters if not needed */
+    /* You need to implement this function */
     (void)stack;
     (void)line_number;
-
-    /* Rest of the function */
 }
 

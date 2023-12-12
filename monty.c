@@ -1,56 +1,49 @@
 #include "monty.h"
-#include <string.h>                                                   
-#include <ctype.h>
+#include <string.h>
 
-/**
- * push - Push an element to the stack.
- * @stack: Double pointer to the beginning of the stack.
- * @line_number: Line number in the Monty bytecode file.
- */
-void push(stack_t **stack, unsigned int line_number)
+int main(int argc, char *argv[])
 {
-    char *arg = strtok(NULL, TOKEN_DELIMITERS);  /* Assuming TOKEN_DELIMITERS is defined in your shell.h */
-
-    if (!arg || !is_numeric(arg))
+    /* Check if the correct number of arguments is provided */
+    if (argc != 2)
     {
-        fprintf(stderr, "L%d: usage: push integer\n", line_number);
+        fprintf(stderr, "USAGE: monty file\n");
         exit(EXIT_FAILURE);
     }
 
-    int value = atoi(arg);
-
-    stack_t *new_node = malloc(sizeof(stack_t));
-    if (!new_node)
+    /* Open and read the Monty bytecode file */
+    FILE *file = fopen(argv[1], "r");
+    if (!file)
     {
-        fprintf(stderr, "Error: malloc failed\n");
+        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);       
         exit(EXIT_FAILURE);
     }
 
-    new_node->n = value;
-    new_node->prev = NULL;
-    new_node->next = *stack;
-
-    if (*stack)
-        (*stack)->prev = new_node;
-
-    *stack = new_node;
-}
-
-/**
- * pall - Print all the values on the stack.
- * @stack: Double pointer to the beginning of the stack.
- * @line_number: Line number in the Monty bytecode file.
- */
-void pall(stack_t **stack, unsigned int line_number)
-{
-    stack_t *current = *stack;
-
-    (void)line_number;  /* Unused parameter */
-
-    while (current)
+    /* Read and process each line from the file */
+    char *line = NULL;
+    size_t len = 0;
+    unsigned int line_number = 0;
+    while (getline(&line, &len, file) != -1)
     {
-        printf("%d\n", current->n);
-        current = current->next;
+        line_number++;
+
+        /* Remove trailing newline or carriage return characters */    
+        size_t length = strlen(line);
+        if (line[length - 1] == '\n' || line[length - 1] == '\r')      
+        {
+            line[length - 1] = '\0';
+        }
+
+        /* Parse and execute the opcode */
+        /* You need to implement this part */
     }
+
+    /* Free allocated memory and close the file */
+    free(line);
+    fclose(file);
+
+    /* Free the stack */
+    /* You need to implement this part */
+
+    return 0;
 }
 
