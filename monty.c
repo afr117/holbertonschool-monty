@@ -1,112 +1,85 @@
 #include "monty.h"
-<<<<<<< HEAD
 #include <string.h>
 
-int main(int argc, char *argv[])
-{
-    /* Check if the correct number of arguments is provided */
-    if (argc != 2)
-    {
-        fprintf(stderr, "USAGE: monty file\n");
-=======
-#include <stdio.h>
-#include <stdlib.h>
-
-size_t stack_size = 0;
 int data_stack[STACK_MAX_SIZE];
-StackNode *stack;
+stack_t *stack;
 
-void init_stack(void) {
+/**
+ * init_stack - Initialize the data stack.
+ */
+void init_stack(void)
+{
     stack = NULL;
 }
 
-void process_line(char *line) {
-    char *opcode;
-    char *value_str;
-    int line_number = 0;
+/**
+ * process_line - Process a line of Monty bytecode.
+ * @line: The line to process.
+ */
+void process_line(char *line)
+{
+    char *opcode, *value_str;
+    unsigned int line_number;
 
-    // Remove trailing newline character
-    size_t len = strlen(line);
-    if (len > 0 && line[len - 1] == '\n') {
-        line[len - 1] = '\0';
-    }
+    opcode = strtok(line, TOKEN_DELIMITERS);
+    if (!opcode || opcode[0] == '#')
+        return;
 
-    // Parse the opcode and value_str from the line
-    opcode = strtok(line, " ");
-    if (opcode == NULL) {
-        return;  // Ignore empty lines
-    }
-
-    value_str = strtok(NULL, " ");
-    line_number++;  // Increment line number for error reporting
-
-    // Call the corresponding function based on the opcode
-    if (strcmp(opcode, "push") == 0) {
-        push(value_str, line_number);
-    } else if (strcmp(opcode, "pall") == 0) {
-        pall();
-    }
-}
-
-int main(int argc, char *argv[]) {
-    init_stack();
-
-    if (argc != 2) {
-        fprintf(stderr, "Usage: monty file\n");
->>>>>>> 956a2aff36631009045e85e03ae2d1fcfbf26ddf
-        exit(EXIT_FAILURE);
-    }
-
-    /* Open and read the Monty bytecode file */
-    FILE *file = fopen(argv[1], "r");
-<<<<<<< HEAD
-    if (!file)
+    if (strcmp(opcode, "push") == 0)
     {
-        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);       
-        exit(EXIT_FAILURE);
-    }
-
-    /* Read and process each line from the file */
-    char *line = NULL;
-    size_t len = 0;
-    unsigned int line_number = 0;
-    while (getline(&line, &len, file) != -1)
-    {
-        line_number++;
-
-        /* Remove trailing newline or carriage return characters */    
-        size_t length = strlen(line);
-        if (line[length - 1] == '\n' || line[length - 1] == '\r')      
+        value_str = strtok(NULL, TOKEN_DELIMITERS);
+        if (!value_str || !is_numeric(value_str))
         {
-            line[length - 1] = '\0';
+            fprintf(stderr, "L%d: usage: push integer\n", line_number);
+            exit(EXIT_FAILURE);
         }
 
-        /* Parse and execute the opcode */
-        /* You need to implement this part */
+        push(&stack, atoi(value_str));
+    }
+    else if (strcmp(opcode, "pall") == 0)
+    {
+        pall(&stack, line_number);
+    }
+    // Add more opcode handling as needed
+}
+
+/**
+ * main - Entry point of the Monty interpreter.
+ * @argc: Number of command-line arguments.
+ * @argv: Array of command-line argument strings.
+ * Return: EXIT_SUCCESS on success, EXIT_FAILURE on failure.
+ */
+int main(int argc, char *argv[])
+{
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    FILE *file;
+    unsigned int line_number = 0; // Initialize line_number
+
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: monty file\n");
+        exit(EXIT_FAILURE);
     }
 
-    /* Free allocated memory and close the file */
-=======
-    if (file == NULL) {
+    file = fopen(argv[1], "r");
+    if (!file)
+    {
         fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
         exit(EXIT_FAILURE);
     }
 
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
+    init_stack();
 
-    while ((read = getline(&line, &len, file)) != -1) {
+    while ((read = getline(&line, &len, file)) != -1)
+    {
+        line_number++;
         process_line(line);
     }
 
->>>>>>> 956a2aff36631009045e85e03ae2d1fcfbf26ddf
-    free(line);
     fclose(file);
-
-    /* Free the stack */
-    /* You need to implement this part */
-
-    return 0;
+    free(line);
+    exit(EXIT_SUCCESS);
 }
 
