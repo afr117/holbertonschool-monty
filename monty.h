@@ -7,6 +7,7 @@
 #include <stdio.h>
 
 #define TOKEN_DELIMITERS " \t\n\r"
+#define STACK_MAX_SIZE 1024
 
 /* Data structure for a stack node */
 typedef struct stack_s
