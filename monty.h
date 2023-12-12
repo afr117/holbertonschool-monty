@@ -1,32 +1,41 @@
+/* monty.h */
 #ifndef MONTY_H
 #define MONTY_H
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <ctype.h>
-#include <stddef.h>
 
-#define STACK_MAX_SIZE 3000
+#define TOKEN_DELIMITERS " \t\r\n\a"
 
-extern size_t stack_size;
+/**
+ * struct stack_s - doubly linked list representation of a stack (or queue)
+ * @n: integer
+ * @prev: points to the previous element of the stack (or queue)
+ * @next: points to the next element of the stack (or queue)
+ *
+ * Description: doubly linked list node structure
+ * for stack, queues, LIFO, FIFO
+ */
+typedef struct stack_s
+{
+    int n;
+    struct stack_s *prev;
+    struct stack_s *next;
+} stack_t;
 
-/* Data structure for the stack */
-typedef struct StackNode {
-    int data;
-    struct StackNode *next;
-} StackNode;
-
-extern StackNode *stack;
-extern int data_stack[STACK_MAX_SIZE];
-
-void init_stack(void);
-void process_line(char *line);
 /* Function prototypes */
-void push(char *value_str, int line_number);
-void pint(int line_number); /* Prints the value at the top of the stack */
-void pop(int line_number);
-void pall(void);
+char **split_commands(char *input);
+int execute_commands(char **commands);
+int is_builtin(char *command);
+void handle_builtin(char **args);
+int execute_external(char **args);
+
+/* Opcodes functions */
+void push(stack_t **stack, unsigned int line_number);
+void pall(stack_t **stack, unsigned int line_number);
+
+/* Helper functions */
+int is_numeric(const char *str);
 
 #endif /* MONTY_H */
+

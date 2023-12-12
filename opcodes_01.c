@@ -1,5 +1,5 @@
 #include "monty.h"
-#include <string.h>                                                   
+#include <string.h>                                                    
 #include <ctype.h>
 
 /**
@@ -54,3 +54,16 @@ void pall(stack_t **stack, unsigned int line_number)
     }
 }
 
+int is_numeric(const char *str)
+{
+    if (!str)
+        return 0;
+
+    for (int i = 0; str[i] != '\0'; i++)
+    {
+        if (!isdigit(str[i]) && str[i] != '-')
+            return 0;
+    }
+
+    return 1;
+}
