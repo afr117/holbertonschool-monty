@@ -19,7 +19,7 @@ void init_stack(void)
 void process_line(char *line)
 {
     char *opcode, *value_str;
-    unsigned int line_number;
+    unsigned int line_number = 0;
 
     opcode = strtok(line, TOKEN_DELIMITERS);
     if (!opcode || opcode[0] == '#')
