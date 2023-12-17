@@ -1,12 +1,13 @@
 #include "monty.h"
 #include <string.h>
+#include <ctype.h>
 
-int data_stack[STACK_MAX_SIZE];
 stack_t *stack;
 
 /**
  * init_stack - Initialize the data stack.
  */
+
 void init_stack(void)
 {
     stack = NULL;
@@ -19,20 +20,25 @@ void init_stack(void)
 void process_line(char *line)
 {
     char *opcode, *value_str;
-    unsigned int line_number = 0; // Initialize line_number
+    unsigned int line_number = 0;
 
     opcode = strtok(line, TOKEN_DELIMITERS);
     if (!opcode || opcode[0] == '#')
         return;
 
+    printf("Debug: Processing opcode '%s'\n", opcode); // Add this debug print statement
+
     if (strcmp(opcode, "push") == 0)
     {
+        line_number++;
         value_str = strtok(NULL, TOKEN_DELIMITERS);
         if (!value_str || !is_numeric(value_str))
         {
             fprintf(stderr, "L%d: usage: push integer\n", line_number);
             exit(EXIT_FAILURE);
         }
+
+        printf("Debug: Pushing value %s to stack\n", value_str); // Add this debug print statement
 
         push(&stack, atoi(value_str));
     }
@@ -55,7 +61,7 @@ int main(int argc, char *argv[])
     size_t len = 0;
     ssize_t read;
     FILE *file;
-    unsigned int line_number = 0; // Initialize line_number
+    unsigned int line_number = 0;
 
     if (argc != 2)
     {
