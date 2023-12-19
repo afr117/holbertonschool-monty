@@ -2,6 +2,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#define TOKEN_DELIMITERS " \t\n"
+
 stack_t *stack;
 
 /**

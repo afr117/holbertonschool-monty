@@ -1,19 +1,18 @@
 #include "monty.h"
 
 /**
- * pall - Prints all the values on the stack.
- * @stack: Double pointer to the beginning of the stack.
- * @line_number: Line number in the Monty bytecode file.
+ * pall - Prints all values on the stack.
+ * @stack: A pointer to the top of the stack.
+ * @line_number: The current line number in the Monty byte code file.
  */
 void pall(stack_t **stack, unsigned int line_number)
 {
-    (void)line_number;
-    stack_t *current = *stack;
+    (void)line_number; /* Unused parameter */
 
-    while (current)
+    while (*stack)
     {
-        printf("%d\n", current->n);
-        current = current->next;
+        printf("%d\n", (*stack)->n);
+        *stack = (*stack)->next;
     }
 }
 

@@ -1,18 +1,10 @@
 #ifndef MONTY_H
 #define MONTY_H
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-#define STACK_MAX_SIZE 1024
-#define TOKEN_DELIMITERS " \t\n"
-
-/**
- * struct stack_s - doubly linked list representation of a stack (or queue)
- * @n: Integer value stored in the node
- * @prev: Pointer to the previous element of the stack
- * @next: Pointer to the next element of the stack
- */
+/* Structure for a stack node */
 typedef struct stack_s
 {
     int n;
@@ -20,8 +12,22 @@ typedef struct stack_s
     struct stack_s *next;
 } stack_t;
 
-void push(stack_t **stack, unsigned int line_number);
+/* Structure for an instruction */
+typedef struct instruction_s
+{
+    char *opcode;
+    void (*f)(stack_t **stack, unsigned int line_number);
+} instruction_t;
+
+/* Function prototypes */
+void push(stack_t **stack, int value);
 void pall(stack_t **stack, unsigned int line_number);
+void free_stack(stack_t *stack);  // Declaration for free_stack
+
+/* Token delimiters */
+#define TOKEN_DELIMITERS " \t\n"
+
+/* Function prototype for is_numeric */
 int is_numeric(const char *str);
 
 #endif /* MONTY_H */
