@@ -48,7 +48,6 @@ void process_line(char *line)
     if (!opcode || opcode[0] == '#')
         return;
 
-    printf("Debug: Processing opcode '%s'\n", opcode);
 
     if (strcmp(opcode, "push") == 0)
     {
@@ -56,11 +55,9 @@ void process_line(char *line)
         value_str = strtok(NULL, TOKEN_DELIMITERS);
         if (!value_str || !is_numeric(value_str))
         {
-            fprintf(stderr, "L%d: usage: push integer\n", line_number);
             exit(EXIT_FAILURE);
         }
 
-        printf("Debug: Pushing value %s to stack\n", value_str);
         push(&stack, atoi(value_str));
     }
     else if (strcmp(opcode, "pall") == 0)
@@ -86,14 +83,12 @@ int main(int argc, char *argv[])
 
     if (argc != 2)
     {
-        fprintf(stderr, "Usage: monty file\n");
         exit(EXIT_FAILURE);
     }
 
     file = fopen(argv[1], "r");
     if (!file)
     {
-        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
         exit(EXIT_FAILURE);
     }
 
