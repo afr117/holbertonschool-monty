@@ -1,3 +1,4 @@
+// monty.c
 #include "monty.h"
 #include <string.h>
 #include <ctype.h>
@@ -9,10 +10,29 @@ stack_t *stack;
 /**
  * init_stack - Initialize the data stack.
  */
-
 void init_stack(void)
 {
     stack = NULL;
+}
+
+/**
+ * is_numeric - Check if a string represents a numeric value.
+ * @str: The string to check.
+ * Return: 1 if numeric, 0 otherwise.
+ */
+int is_numeric(const char *str)
+{
+    if (!str || *str == '\0' || (*str == '-' && *(str + 1) == '\0'))
+        return 0;
+
+    while (*str)
+    {
+        if (!isdigit(*str) && *str != '-')
+            return 0;
+        str++;
+    }
+
+    return 1;
 }
 
 /**
@@ -28,7 +48,7 @@ void process_line(char *line)
     if (!opcode || opcode[0] == '#')
         return;
 
-    printf("Debug: Processing opcode '%s'\n", opcode); // Add this debug print statement
+    printf("Debug: Processing opcode '%s'\n", opcode);
 
     if (strcmp(opcode, "push") == 0)
     {
@@ -40,8 +60,7 @@ void process_line(char *line)
             exit(EXIT_FAILURE);
         }
 
-        printf("Debug: Pushing value %s to stack\n", value_str); // Add this debug print statement
-
+        printf("Debug: Pushing value %s to stack\n", value_str);
         push(&stack, atoi(value_str));
     }
     else if (strcmp(opcode, "pall") == 0)

@@ -25,14 +25,11 @@ void push(stack_t **stack, int value);
 void pall(stack_t **stack, unsigned int line_number);
 void free_stack(stack_t *stack);
 
-/* Token delimiters */
-#define TOKEN_DELIMITERS " \t\n"
-
-/* Function prototype for is_numeric */
-int is_numeric(const char *str);
-
-/* Declaration for the stack variable */
+/* Declare stack as an external variable */
 extern stack_t *stack;
+
+/* Check if a string is numeric */
+int is_numeric(const char *str);
 
 #endif /* MONTY_H */
 
