@@ -8,7 +8,6 @@ int main(int argc, char *argv[])
     FILE *file;
     char *line = NULL;
     size_t len = 0;
-    stack_t *stack = NULL;
     unsigned int line_number = 0;
     char *opcode;
     int value;
